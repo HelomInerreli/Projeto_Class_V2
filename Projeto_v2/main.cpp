@@ -1,28 +1,33 @@
-// #include "include/Pessoa.h"
-
-// int main() {
-//     Pessoa p("Harry Potter", 20);
-//     Pessoa p1("Helom Valentim", 38);
-//     p1.exibir();
-//     return 0;
-// }
-
 #include "include/Loja.h"
-
+#include "include/Auxiliares.h"
 #include <iostream>
+#include <locale> // biblioteca para mudar charset para UTF-8
 
 using namespace std;
 
 int main()
 {
+    setlocale(LC_ALL, ""); // mudar charset para utf-8
+    system("color A");     // Mudar cor do terminal no Windows
+    char choice;
     Loja L;
+    Auxiliares A;
 
+    do
+    {
+        A.showMenu();
+        cin >> choice;
+        choice = toupper(choice);
+    } while (choice != 'F');
+    
 
-    L.adicionarCliente("Helom", "1234", "Minha Casa");
-    L.adicionarCliente("Fulano", "4321", "Casa dele");
-    L.adicionarCliente("Ciclano", "1144", "Mora na rua");
+    // L.adicionarCliente("Helom", "1234", "Minha Casa");
+    // L.adicionarCliente("Fulano", "4321", "Casa dele");
+    // L.adicionarCliente("Ciclano", "1144", "Mora na rua");
 
-    L.mostrarClientes();
+    // L.mostrarClientes();
+
+    // cout << A.textToUpper("HELLO word") << endl;
 }
 
 /*
