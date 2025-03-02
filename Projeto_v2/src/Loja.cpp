@@ -36,7 +36,7 @@ void Loja::mostrarClientes()
 	}
 }
 
-int Loja::getLastId()
+int Loja::getLastIdCliente()
 {
 	int maiorId = 0;
 
@@ -60,4 +60,80 @@ int Loja::buscarCliente(string campo, string valor)
 	//}
 
 	return 0;
+}
+
+//Produto -------------------------------------------------------------------------------
+void Loja::armazenaProduto(string nome, int quantidade, float preco)
+{	
+	int lastID = getLastId() + 1;
+	if (contProduto < 100)
+	{
+		Stock[contProduto] = Produto(lastID, nome, quantidade, preco);
+		contProduto++;
+	}
+	else
+	{
+		cout << "Stock cheio!";
+	}
+}
+
+int Loja::buscaProduto(int id)
+{
+	for (int i = 0; i < contProduto; i++)
+	{
+		if (Stock[i].getId() == id)
+		{
+			return i;
+		}
+	
+	}
+	return -1;
+}
+
+void Loja::imprimeStock()
+{
+	for (int i = 0; i < contProduto; i++)
+	{
+		imprimeProduto(i);
+	}
+}
+
+void Loja::imprimeProduto(int i)
+{
+	cout << "[======================================================================================\n";
+	cout << endl;
+	cout << "                                    PRODUTO\n";
+	cout << endl;
+	cout << "[======================================================================================\n";
+	cout << "| ID | DESCRICAO | QTD | PRECO |\n";
+	cout << "________________________________\n";
+	cout << Stock[i].toString() << endl << endl;
+}
+
+void Loja::removeProduto(int id)
+{
+	int pos = buscaProduto(id);
+
+	for (pos; pos < contProduto -1; pos++)
+	{
+		Stock[pos] = Stock[pos + 1];
+	}
+	contProduto--;
+}
+
+int Loja::getLastId()
+{
+	int maiorID = 0;
+
+	for (int i = 0; i < contProduto; i++)
+	{
+		int id = Stock[i].getId();
+		if ( id > maiorID)
+		{
+			maiorID = id;
+		}
+
+
+	}
+	return maiorID;
 }
