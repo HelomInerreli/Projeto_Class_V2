@@ -19,20 +19,20 @@ public:
 	Cliente();
 	Cliente(int id, string nome, string telefone, string morada);
 
-	////Funções seletoras
+	////Funï¿½ï¿½es seletoras
 	int getId();
 	//string getNome();
 	//string getTelefone();
 	//string getMorada();
 
-	////Funções de modificação
+	////Funï¿½ï¿½es de modificaï¿½ï¿½o
 	//void updateNome();
 	//void updateTelefone();
 	//void updateMorada();
 
 	//Auxiliares
-	void imprimirCliente();
-
+	void imprimirCliente(int* tamanhos);
+	int* tamanhoColunas();
 
 };
 

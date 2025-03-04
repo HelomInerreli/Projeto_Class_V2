@@ -15,7 +15,9 @@ public:
 	string getDateTime();
 	bool validNum(string valor);
 	bool sorteio(int nSorte, float minCompra, float valorCompra);
-	void showMenu();
 
+	// Funcoes para menus
+	void showMenu();
+	void showMenuClientes();
 };
 

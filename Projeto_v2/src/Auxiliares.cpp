@@ -122,6 +122,7 @@ bool Auxiliares::sorteio(int nSorte, float minCompra, float valorCompra)
     return ganhou;
 }
 
+// Funcoes para menus
 void Auxiliares::showMenu()
 {
     system("clear"); // Limpa o terminal no Windows
@@ -129,10 +130,101 @@ void Auxiliares::showMenu()
     cout << endl;
     cout << "                                   MENU PRINCIPAL\033[0m\n";
     cout << endl;
-    cout << "               S. STOCK   " << "V. VENDAS   " << "A. SORTEIO ALEATÓRIO   " << "F. FECHAR\n";
+    cout << "    S. STOCK   " << "V. VENDAS   " << "C. CLIENTES   " << "R. RELATORIOS   "  << "F. FECHAR\n";
     cout << "\033[32m======================================================================================\n";
     cout << "                          Data e Hora: " << getDateTime() << "\n";
     cout << "======================================================================================\033[0m\n";
     cout << "Escolha uma opção: ";
 }
 
+void Auxiliares::showMenuClientes()
+{
+    char choice;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MENU CLIENTES\033[0m\n";
+        cout << endl;
+        cout << "   C. CONSULTAR   " << "E. ELIMINAR   " << "A. ADICIONAR   " << "M. MODIFICAR   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        // cout << endl;
+        // printMatrix(mProd, linhasProd, colunasProd);
+        // cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'C':
+            cout << "Consultando Stock...\n";
+            // showMenuSearchStock(mProd, linhasProd, colunasProd);
+            break;
+        case 'A':
+            cout << "Adicionando Produto...\n";
+            // showMenuAddProd(mProd, linhasProd, colunasProd);
+            break;
+        case 'E':
+            cout << "Informe o ID do produto que deseja remover: ";
+            // cin >> id;
+            // linha = findItem(id, mProd, linhasProd, 0);
+            // while (linha < 0 && textToUpper(id) != "R")
+            // {
+            //     cout << "O id inserido não foi encontrado.\n";
+            //     cout << "Insira novamente o id : ";
+            //     cin >> id;
+            //     linha = findItem(id, mProd, linhasProd, 0);
+            // }
+            // if (textToUpper(id) == "R")
+            // {
+            //     choice = 'R';
+            //     break;
+            // }
+            // getMatLineProd(mProd, mProduto, linha);
+            cout << endl;
+            cout << "\033[32m======================================================================================\n";
+            // cout << "        Produto: \033[0m" << mProduto[0][1] << "  \033[32mQuantidade: \033[0m" << mProduto[0][2] <<"  \033[32mCusto: \033[0m" << mProduto[0][3] << "\n";
+            cout << "\033[32m======================================================================================\033[0m\n";
+            cout << endl;
+            cout << "Deseja realmente remover o produto? (S/N): ";
+            // cin >> id;
+            // id = textToUpper(id);
+            // if (id == "S")
+            // {
+            //     // diminuirLinhas(mProd, linhasProd, colunasProd, linha);
+            // }
+            break;
+        case 'M':
+            cout << "Escolha o ID: ";
+            // cin >> id;
+            // linha = findItem(id, mProd, linhasProd, 0);
+            // while (linha < 0 && textToUpper(id) != "R")
+            // {
+
+            //     cout << "O id inserido não foi encontrado.\n";
+            //     cout << "Insira novamente o id : ";
+            //     cin >> id;
+            //     linha = findItem(id, mProd, linhasProd, 0);
+            //     // system("clear");
+            // }
+            // if (textToUpper(id) == "R")
+            // {
+            //     choice = 'R';
+            //     break;
+            // }
+
+            // showMenuAltProd(mProd, linhasProd, id, linha);
+            break;
+        case 'R':
+            cout << "Saindo...\n";
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+            sleep(1);
+        }
+    } while (choice != 'R');
+}

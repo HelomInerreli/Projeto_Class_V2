@@ -21,6 +21,7 @@ public:
 	void mostrarClientes();
 	int getLastIdCliente();
 	int buscarCliente(string campo, string valor);
+	int* tamanhosColunasClientes();
 //Produto
 	void armazenaProduto(string nome, int quantidade, float preco);
 	int buscaProduto( int id);
@@ -28,5 +29,12 @@ public:
 	void imprimeProduto(int i);
 	void removeProduto(int id);
 	int getLastId();
+//Vendas
+
+//Relatorios
+
+//Auxiliares
+	void preencherDadosIniciais();
+
 };
 

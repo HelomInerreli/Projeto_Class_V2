@@ -2,6 +2,7 @@
 #include "include/Auxiliares.h"
 #include <iostream>
 #include <locale> // biblioteca para mudar charset para UTF-8
+#include <unistd.h>
 
 using namespace std;
 
@@ -11,6 +12,8 @@ int main()
     char choice;
     Loja L;
     Auxiliares A;
+
+    L.preencherDadosIniciais();
 
     do
     {
@@ -26,9 +29,13 @@ int main()
         case 'V':
             cout << "Opção Vendas\n";
             break;
-        case 'A':
-            cout << "Opção Sorteio Aleatório\n";
-            A.sorteio(123, 5, 50);
+        case 'C':
+            cout << "Opção Clientes\n";
+            L.mostrarClientes();
+            sleep(15);
+            break;
+        case 'R':
+            cout << "Opção Relatorios\n";
             break;
         case 'F':
             cout << "Opção Fechar\n";
