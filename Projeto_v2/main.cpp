@@ -25,8 +25,6 @@ int main()
         {
         case 'S':
             cout << "Opção Stock\n";
-            A.showMenuStock(L);
-            // sleep(15);
             break;
         case 'V':
             cout << "Opção Vendas\n";

@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
 using namespace std;
 
 class Produto
@@ -31,9 +31,6 @@ public:
 
 	//outras funcoes
 	string toString();
-	void imprimirProduto(int* tamanhos);
-	int* tamanhoColunasProdutos();
-	int* tamanhoColunas();
-	void menuAtlProd();
+
 };
 
