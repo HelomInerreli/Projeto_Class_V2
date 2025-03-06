@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include"Loja.h"
 using namespace std;
 
 class Auxiliares
@@ -19,5 +19,7 @@ public:
 	// Funcoes para menus
 	void showMenu();
 	void showMenuClientes();
+	void showMenuStock(Loja L);
+	void showMenuAddProdutos();
 };
 

@@ -1,4 +1,5 @@
 #include "../include/Auxiliares.h"
+#include "../include/Loja.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -7,6 +8,8 @@
 #include <cctype> //biblioteca para a função de validação std::isdigit(c)
 #include <unistd.h>
 #include <sstream>
+
+Loja L;
 
 string Auxiliares::textToUpper(string text)
 {
@@ -226,5 +229,107 @@ void Auxiliares::showMenuClientes()
             cout << "Opção inválida! Tente novamente.\n";
             sleep(1);
         }
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuStock(Loja L){
+    char choice;
+    do {
+	system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MENU STOCK\033[0m\n";
+        cout << endl;
+        cout << "   M. MOSTRAR STOCK   " << "C. CRIAR PRODUTO   " << "A. ADICIONAR STOCK  " << "E. ELIMINAR" << "R. VOLTAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+        
+        switch (choice)
+        {
+        case 'M':
+            L.mostrarProdutos();
+            sleep(15);
+            break;
+        case 'C':
+        
+            break;
+        
+        case 'A':
+            
+            break;
+        case 'E':
+
+            break;
+        
+        default:
+            break;
+        }
+    } while (choice != 'R');
+    }
+
+void Auxiliares::showMenuAddProdutos(){
+    char choice;
+    string id, nomeProd, qtdProd, precoProd;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    ADICIONAR PRODUTO\033[0m\n";
+        cout << endl;
+        cout << "                                     R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+       L.mostrarProdutos();
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        id = to_string(L.getLastId() + 1);
+        cout << "ID: " << id << endl;
+        cout << "Insira nome do produto: ";
+        cin.ignore();
+        getline(cin, nomeProd);
+        // cout <<"\n----------"<< nomeProd.size();
+        nomeProd = textToUpper(nomeProd);
+        if (nomeProd == "R")
+        {
+            choice = 'R';
+            break;
+        }
+        cout << "Insira a quantidade: ";
+        cin >> qtdProd;
+
+        while (!validNum(qtdProd) && textToUpper(qtdProd) != "R")
+        {
+            cout << "Valor inserido não é um numero.\n";
+            cout << "Insira a quantidade: ";
+            cin >> qtdProd;
+        }
+        if (textToUpper(qtdProd) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        cout << "Insira o custo: ";
+        cin >> precoProd;
+        while (!validNum(precoProd) && textToUpper(precoProd) != "R")
+        {
+
+            cout << "Valor inserido não é um numero.\n";
+            cout << "Insira o custo: ";
+            cin >> precoProd;
+        }
+        if (textToUpper(precoProd) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
     } while (choice != 'R');
 }
