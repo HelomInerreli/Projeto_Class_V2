@@ -1,4 +1,6 @@
 #include "../include/Auxiliares.h"
+#include "../include/Cliente.h"
+#include "../include/Loja.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -7,6 +9,8 @@
 #include <cctype> //biblioteca para a função de validação std::isdigit(c)
 #include <unistd.h>
 #include <sstream>
+
+Loja L;
 
 string Auxiliares::textToUpper(string text)
 {
@@ -122,6 +126,8 @@ bool Auxiliares::sorteio(int nSorte, float minCompra, float valorCompra)
     return ganhou;
 }
 
+
+
 // Funcoes para menus
 void Auxiliares::showMenu()
 {
@@ -137,9 +143,13 @@ void Auxiliares::showMenu()
     cout << "Escolha uma opção: ";
 }
 
-void Auxiliares::showMenuClientes()
+void Auxiliares::showMenuClientes(Loja L2)
 {
     char choice;
+    L = L2;
+
+    string id;
+    int linha;
     do
     {
         system("clear"); // Limpa o terminal no Windows
@@ -149,9 +159,9 @@ void Auxiliares::showMenuClientes()
         cout << endl;
         cout << "   C. CONSULTAR   " << "E. ELIMINAR   " << "A. ADICIONAR   " << "M. MODIFICAR   " << "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
-        // cout << endl;
-        // printMatrix(mProd, linhasProd, colunasProd);
-        // cout << endl;
+        cout << endl;
+        L.mostrarClientes();
+        cout << endl;
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
         cout << "======================================================================================\033[0m\n";
         cout << "Escolha uma opção: ";
@@ -200,24 +210,23 @@ void Auxiliares::showMenuClientes()
             break;
         case 'M':
             cout << "Escolha o ID: ";
-            // cin >> id;
-            // linha = findItem(id, mProd, linhasProd, 0);
-            // while (linha < 0 && textToUpper(id) != "R")
-            // {
+            cin >> id;
+            linha = L.buscarCliente("ID", id);
+            while (linha < 0 && textToUpper(id) != "R")
+            {
+                cout << "O id inserido não foi encontrado.\n";
+                cout << "Insira novamente o id : ";
+                cin >> id;
+                linha = L.buscarCliente("ID", id);
+            }
 
-            //     cout << "O id inserido não foi encontrado.\n";
-            //     cout << "Insira novamente o id : ";
-            //     cin >> id;
-            //     linha = findItem(id, mProd, linhasProd, 0);
-            //     // system("clear");
-            // }
-            // if (textToUpper(id) == "R")
-            // {
-            //     choice = 'R';
-            //     break;
-            // }
+            if (textToUpper(id) == "R")
+            {
+                choice = 'R';
+                break;
+            }
 
-            // showMenuAltProd(mProd, linhasProd, id, linha);
+            showMenuAltCliente(stoi(id), L);
             break;
         case 'R':
             cout << "Saindo...\n";
@@ -226,5 +235,48 @@ void Auxiliares::showMenuClientes()
             cout << "Opção inválida! Tente novamente.\n";
             sleep(1);
         }
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuAltCliente(int id, Loja L2)
+{
+    char choice;
+    L = L2;
+    string novoValor;
+    int pos = L.buscarCliente("ID", to_string(id));
+
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MODIFICAR CLIENTE\033[0m\n";
+        cout << endl;
+        cout << "   N. ALTERAR NOME   " << "T. ALTERAR TELEFONE   " << "M. ALTERAR MORADA   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        L.mostrarCliente(pos);
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+        switch (choice)
+        {
+        case 'N':
+            L.ListaClientes[pos].updateNome();
+            break;
+        case 'T':
+            L.ListaClientes[pos].updateTelefone();
+            break;
+        case 'M':
+            L.ListaClientes[pos].updateMorada();
+            break;
+
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+
     } while (choice != 'R');
 }

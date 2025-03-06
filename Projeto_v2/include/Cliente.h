@@ -21,14 +21,14 @@ public:
 
 	////Fun��es seletoras
 	int getId();
-	//string getNome();
-	//string getTelefone();
-	//string getMorada();
+	string getNome();
+	string getTelefone();
+	string getMorada();
 
-	////Fun��es de modifica��o
-	//void updateNome();
-	//void updateTelefone();
-	//void updateMorada();
+	//Funções de modificações
+	void updateNome();
+	void updateTelefone();
+	void updateMorada();
 
 	//Auxiliares
 	void imprimirCliente(int* tamanhos);

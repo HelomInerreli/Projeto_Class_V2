@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Loja.h"
 
 using namespace std;
 
@@ -18,6 +19,7 @@ public:
 
 	// Funcoes para menus
 	void showMenu();
-	void showMenuClientes();
+	void showMenuClientes(Loja L2);
+	void showMenuAltCliente(int id, Loja L2);
 };
 

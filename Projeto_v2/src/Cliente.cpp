@@ -5,6 +5,8 @@
 
 using namespace std;
 
+Auxiliares A;
+
 Cliente::Cliente()
 {
 
@@ -23,6 +25,59 @@ int Cliente::getId()
 	return id;
 }
 
+string Cliente::getNome()
+{
+	return nome;
+}
+
+string Cliente::getTelefone()
+{
+	return telefone;
+}
+
+string Cliente::getMorada()
+{
+	return morada;
+}
+
+void Cliente::updateNome()
+{
+	cout << "Informe o novo nome para o cliente: ";
+	cin.ignore();
+	getline(cin, nome);
+}
+
+void Cliente::updateTelefone()
+{
+	string novoValor;
+	cout << "Informe o novo telefone para o cliente: ";
+	cin.ignore();
+	getline(cin, novoValor);
+	while (!A.validNum(novoValor) && A.textToUpper(novoValor) != "R")
+	{
+		cout << "Valor inserido não é um número.\n";
+		cout << "Informe o novo telefone para o cliente: ";
+		cin.ignore();
+		getline(cin, novoValor);
+	}
+
+	if (A.textToUpper(novoValor) != "R")
+	{
+		telefone = novoValor;
+	}
+	else	
+	{
+		return;
+	}
+	
+}
+
+void Cliente::updateMorada()
+{
+	cout << "Informe a nova morada para o cliente: ";
+	cin.ignore();
+	getline(cin, morada);
+}
 
 void Cliente::imprimirCliente(int* tamanhos)
 {

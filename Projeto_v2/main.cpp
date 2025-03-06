@@ -14,7 +14,7 @@ int main()
     Auxiliares A;
 
     L.preencherDadosIniciais();
-
+    
     do
     {
         A.showMenu();
@@ -31,8 +31,7 @@ int main()
             break;
         case 'C':
             cout << "Opção Clientes\n";
-            L.mostrarClientes();
-            sleep(15);
+            A.showMenuClientes(L);
             break;
         case 'R':
             cout << "Opção Relatorios\n";

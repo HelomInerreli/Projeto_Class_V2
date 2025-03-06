@@ -8,6 +8,21 @@ Loja::Loja()
 {
 
 }
+Loja::Loja(Loja &L)
+{
+	contCliente = L.contCliente;
+	for (int i = 0; i < contCliente; i++)
+	{
+		ListaClientes[i] = L.ListaClientes[i];
+	}
+
+	contProduto = L.contProduto;
+	for (int i = 0; i < contProduto; i++)
+	{
+		Stock[i] = L.Stock[i];
+	}
+}
+
 
 //Cliente -------------------------------------------------------------------------------
 void Loja::adicionarCliente(string nome, string telefone, string morada)
@@ -24,6 +39,58 @@ void Loja::adicionarCliente(string nome, string telefone, string morada)
 		cout << "Lista de clientes cheia...";
 	}
 
+}
+
+void Loja::mostrarCliente(int pos)
+{
+	int* tamanhos = tamanhosColunasClientes();
+	int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
+	string txtTitulo = " LISTA DE CLIENTES ";
+	int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+	string linha = "";
+	for (int i = 0; i < tLinhas; i++)
+	{
+		linha += "-";
+	}
+	string linhaDupla = "";
+	for (int i = 0; i < tTitulo; i++)
+	{
+		linhaDupla += "=";
+	}
+	string cabecalho = "| ID";
+	for (int i = 0; i < tamanhos[0] - 2; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | NOME ";
+	for (int i = 0; i < tamanhos[1] - 4; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | TELEFONE";
+	for (int i = 0; i < tamanhos[2] - 7; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | MORADA";
+	for (int i = 0; i < tamanhos[3] - 6; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += "  |";
+
+	cout << endl;
+	cout << linha << "\n";
+	cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+	cout << linha << "\n";
+	cout << cabecalho << "\n";
+	cout << linha << "\n";
+
+
+	ListaClientes[pos].imprimirCliente(tamanhos);
+
+	cout << linha << "\n";
+	cout << endl;
 }
 
 void Loja::mostrarClientes()
@@ -96,13 +163,95 @@ int Loja::getLastIdCliente()
 
 int Loja::buscarCliente(string campo, string valor)
 {
-	//campo = textToUpper(campo);
-	//if (campo == "ID")
-	//{
+	if (campo == "ID")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getId() == stoi(valor))
+			{
+				return i;
+			}	
+		}
+	} else if (campo == "NOME")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getNome() == valor)
+			{
+				return i;
+			}
+		}
+	} else if (campo == "TELEFONE")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getTelefone() == valor)
+			{
+				return i;
+			}
+		}
+	} else if (campo == "MORADA")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getMorada() == valor)
+			{
+				return i;
+			}
+		}
+	} 
 
-	//}
+	return -1;
+}
 
-	return 0;
+int* Loja::buscarClientes(string campo, string valor)
+{
+	int* ids = new int[100];
+	int cont = 0;
+
+	if (campo == "ID")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getId() == stoi(valor))
+			{
+				ids[cont] = i;
+				cont++;
+			}	
+		}
+	} else if (campo == "NOME")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getNome() == valor)
+			{
+				ids[cont] = i;
+				cont++;
+			}
+		}
+	} else if (campo == "TELEFONE")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getTelefone() == valor)
+			{
+				ids[cont] = i;
+				cont++;
+			}
+		}
+	} else if (campo == "MORADA")
+	{
+		for (int i = 0; i < contCliente; i++)
+		{
+			if (ListaClientes[i].getMorada() == valor)
+			{
+				ids[cont] = i;
+				cont++;
+			}
+		}
+	} 
+	ids[cont] = -1;
+	return ids;
 }
 
 int* Loja::tamanhosColunasClientes()
