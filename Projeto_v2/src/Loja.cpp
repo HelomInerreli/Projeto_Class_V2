@@ -2,6 +2,7 @@
 #include "../include/Auxiliares.h"
 #include <iostream>
 
+
 using namespace std;
 
 Loja::Loja()
@@ -145,6 +146,130 @@ void Loja::mostrarClientes()
 	cout << linha << "\n";
 	cout << endl;
 }
+// __________________________________________________________________
+
+
+void Loja::mostrarProdutos()
+{
+	int* tamanhos = tamanhoColunasProdutos();
+	int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
+	string txtTitulo = " LISTA DE PRODUTOS ";
+	int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+	string linha = "";
+	for (int i = 0; i < tLinhas; i++)
+	{
+		linha += "-";
+	}
+	string linhaDupla = "";
+	for (int i = 0; i < tTitulo; i++)
+	{
+		linhaDupla += "=";
+	}
+	string cabecalho = "| ID";
+	for (int i = 0; i < tamanhos[0] - 2; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | NOME ";
+	for (int i = 0; i < tamanhos[1] - 4; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | QTD ";
+	for (int i = 0; i < tamanhos[2] - 3; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += " | PRECO ";
+	for (int i = 0; i < tamanhos[3] - 6; i++)
+	{
+		cabecalho += " ";
+	}
+	cabecalho += "|";
+
+	cout << endl;
+	cout << linha << "\n";
+	cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+	cout << linha << "\n";
+	cout << cabecalho << "\n";
+	cout << linha << "\n";
+
+	for (int i = 0; i < contProduto; i++)
+	{
+		Stock[i].imprimirProduto(tamanhos);
+	}
+	cout << linha << "\n";
+	cout << endl;
+}
+
+// void Loja::alteraProduto(){
+// {
+//     char choice;
+//     string novoValor;
+//     string **mLinhaProd = new string *[2]; // criar matriz para buscar produtos do id solicitado (na modificação de produto)
+//     for (int i = 0; i < 2; i++)
+//     {
+//         mLinhaProd[i] = new string[4];
+//     }
+//     getMatLine(mProd, mLinhaProd, linha);
+
+//     do
+//     {
+//         system("clear"); // Limpa o terminal no Windows
+//         cout << "\033[32m======================================================================================\n";
+//         cout << endl;
+//         cout << "                                    MODIFICAR PRODUTO\033[0m\n";
+//         cout << endl;
+//         cout << "   N. ALTERAR NOME   " << "Q. ALTERAR QUANTIDADE   " << "C. ALTERAR CUSTO   " << "R. RETORNAR\n";
+//         cout << "\033[32m======================================================================================\033[0m\n";
+//         cout << endl;
+//         printMatrix(mLinhaProd, 2, 4);
+//         cout << endl;
+//         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+//         cout << "======================================================================================\033[0m\n";
+//         cout << "Escolha uma opção: ";
+//         cin >> choice;
+//         choice = toupper(choice);
+//         switch (choice)
+//         {
+//         case 'N':
+//             cout << "Informe o novo nome para o produto: ";
+//             cin.ignore();
+//             getline(cin, novoValor);
+//             novoValor = textToUpper(novoValor);
+//             editFildMatrix(mProd, linha, 1, novoValor);
+//             break;
+//         case 'Q':
+//             cout << "Informe a nova quantidade para o produto: ";
+//             cin >> novoValor;
+//             while (!validNum(novoValor) && textToUpper(novoValor) != "R")
+//             {
+//                 cout << "Valor inserido não é um número.\n";
+//                 cout << "Informe a nova quantidade para o produto: ";
+//                 cin >> novoValor;
+//             }
+
+//             editFildMatrix(mProd, linha, 2, novoValor);
+//             break;
+//         case 'C':
+//             cout << "Informe o novo custo para o produto: ";
+//             cin >> novoValor;
+//             while (!validNum(novoValor) && textToUpper(novoValor) != "R")
+//             {
+//                 cout << "Valor inserido não é um número.\n";
+//                 cout << "Informe o novo custo para o produto: ";
+//                 cin >> novoValor;
+//             }
+//             editFildMatrix(mProd, linha, 3, novoValor);
+//             break;
+
+//         default:
+//             cout << "Opção inválida! Tente novamente.\n";
+//         }
+
+//     } while (choice != 'R');
+// }
+// }
 
 int Loja::getLastIdCliente()
 {
@@ -276,6 +401,28 @@ int* Loja::tamanhosColunasClientes()
 
 	return tamanhos;
 }
+int* Loja::tamanhoColunasProdutos()
+{
+	int* tamanhos = new int[4];
+	tamanhos[0] = 0;
+	tamanhos[1] = 0;
+	tamanhos[2] = 0;
+	tamanhos[3] = 0;
+
+	for (int i = 0; i < contProduto; i++)
+	{
+		int* tamanhosProdutos = Stock[i].tamanhoColunas();
+		for (int j = 0; j < 4; j++)
+		{
+			if (tamanhosProdutos[j] > tamanhos[j])
+			{
+				tamanhos[j] = tamanhosProdutos[j];
+			}
+		}
+	}
+
+	return tamanhos;
+}
 //Produto -------------------------------------------------------------------------------
 void Loja::armazenaProduto(string nome, int quantidade, float preco)
 {	
@@ -304,13 +451,6 @@ int Loja::buscaProduto(int id)
 	return -1;
 }
 
-void Loja::imprimeStock()
-{
-	for (int i = 0; i < contProduto; i++)
-	{
-		imprimeProduto(i);
-	}
-}
 
 void Loja::imprimeProduto(int i)
 {

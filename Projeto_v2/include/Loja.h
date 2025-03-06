@@ -1,6 +1,5 @@
 #pragma once
 #include "Cliente.h"
-// #include "Auxiliares.h"
 #include "Produto.h"
 #include <iostream>
 
@@ -20,17 +19,19 @@ public:
 	void adicionarCliente(string nome, string telefone, string morada);
 	void mostrarCliente(int id);
 	void mostrarClientes();
+	void mostrarProdutos();
 	int getLastIdCliente();
 	int* buscarClientes(string campo, string valor);
 	int buscarCliente(string campo, string valor);
 	int* tamanhosColunasClientes();
 
+	int* tamanhoColunasProdutos();
 //Produto
 	void armazenaProduto(string nome, int quantidade, float preco);
 	int buscaProduto( int id);
-	void imprimeStock();
 	void imprimeProduto(int i);
 	void removeProduto(int id);
+	void alteraProduto();
 	int getLastId();
 //Vendas
 
