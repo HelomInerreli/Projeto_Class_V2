@@ -234,13 +234,15 @@ void Auxiliares::showMenuClientes()
 
 void Auxiliares::showMenuStock(Loja L){
     char choice;
+    string id;
+    int linha;
     do {
 	system("clear"); // Limpa o terminal no Windows
         cout << "\033[32m======================================================================================\n";
         cout << endl;
         cout << "                                    MENU STOCK\033[0m\n";
         cout << endl;
-        cout << "   M. MOSTRAR STOCK   " << "C. CRIAR PRODUTO   " << "A. ADICIONAR STOCK  " << "E. ELIMINAR" << "R. VOLTAR\n";
+        cout << "  M. MOSTRAR STOCK   " << "C. CRIAR PRODUTO  " << " Q. MODIFICAR  " << " E. ELIMINAR  " << "  R. VOLTAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
@@ -256,11 +258,27 @@ void Auxiliares::showMenuStock(Loja L){
             sleep(15);
             break;
         case 'C':
-        
+            showMenuAddProdutos(L);
             break;
         
-        case 'A':
-            
+        case 'Q':
+            cout << "Digite o ID do produto desejado : ";
+            cin >> id;
+            linha = L.buscaProduto(stoi(id));
+            while (linha < 0 && textToUpper(id) != "R")
+            {
+                cout << "O id inserido não foi encontrado.\n";
+                cout << "Insira novamente o id : ";
+                cin >> id;
+                linha = L.buscaProduto(stoi(id));
+            }
+ 
+            if (textToUpper(id) == "R")
+            {
+                choice = 'R';
+                break;
+            }
+            showMenuAltProd(L, stoi(id));
             break;
         case 'E':
 
@@ -272,7 +290,7 @@ void Auxiliares::showMenuStock(Loja L){
     } while (choice != 'R');
     }
 
-void Auxiliares::showMenuAddProdutos(){
+void Auxiliares::showMenuAddProdutos(Loja L){
     char choice;
     string id, nomeProd, qtdProd, precoProd;
     do
@@ -329,6 +347,57 @@ void Auxiliares::showMenuAddProdutos(){
         {
             choice = 'R';
             break;
+        }
+        L.armazenaProduto(nomeProd, stoi(qtdProd), stof(precoProd));
+
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuAltProd(Loja L,int id)
+{
+    char choice;
+    int linha;
+    string novoValor;
+    linha=L.buscaProduto(id);
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MODIFICAR PRODUTO\033[0m\n";
+        cout << endl;
+        cout << "   N. ALTERAR NOME   " << "Q. ALTERAR QUANTIDADE   " << "C. ALTERAR CUSTO   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        L.mostrarProdutos();
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+        switch (choice)
+        {
+        case 'N':
+            
+            break;
+        case 'Q':
+            L.Stock[linha].setQuantidade();
+
+            break;
+        case 'C':
+            cout << "Informe o novo custo para o produto: ";
+            cin >> novoValor;
+            while (!validNum(novoValor) && textToUpper(novoValor) != "R")
+            {
+                cout << "Valor inserido não é um número.\n";
+                cout << "Informe o novo custo para o produto: ";
+                cin >> novoValor;
+            }
+            break;
+
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
         }
 
     } while (choice != 'R');

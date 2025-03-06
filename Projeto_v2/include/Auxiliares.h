@@ -20,6 +20,7 @@ public:
 	void showMenu();
 	void showMenuClientes();
 	void showMenuStock(Loja L);
-	void showMenuAddProdutos();
+	void showMenuAddProdutos(Loja L);
+	void showMenuAltProd(Loja L, int id);
 };
 

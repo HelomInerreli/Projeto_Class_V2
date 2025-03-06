@@ -6,14 +6,16 @@
 class Loja
 {
 private:
-	int contCliente = 0;
-	Cliente ListaClientes[100];
 
-	int contProduto = 0;
-	Produto Stock[100];
 
 
 public:
+int contCliente = 0;
+Cliente ListaClientes[100];
+
+int contProduto = 0;
+Produto Stock[100];
+
 	Loja();
 //Cliente
 	void adicionarCliente(string nome, string telefone, string morada);
