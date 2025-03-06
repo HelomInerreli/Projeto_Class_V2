@@ -41,6 +41,17 @@ void Loja::adicionarCliente(string nome, string telefone, string morada)
 
 }
 
+void Loja::removerCliente(int id)
+{
+	int pos = buscarCliente("ID", to_string(id));
+
+	for (pos; pos < contCliente -1; pos++)
+	{
+		ListaClientes[pos] = ListaClientes[pos + 1];
+	}
+	contCliente--;
+}
+
 void Loja::mostrarCliente(int pos)
 {
 	int* tamanhos = tamanhosColunasClientes();

@@ -179,34 +179,35 @@ void Auxiliares::showMenuClientes(Loja L2)
             // showMenuAddProd(mProd, linhasProd, colunasProd);
             break;
         case 'E':
-            cout << "Informe o ID do produto que deseja remover: ";
-            // cin >> id;
-            // linha = findItem(id, mProd, linhasProd, 0);
-            // while (linha < 0 && textToUpper(id) != "R")
-            // {
-            //     cout << "O id inserido não foi encontrado.\n";
-            //     cout << "Insira novamente o id : ";
-            //     cin >> id;
-            //     linha = findItem(id, mProd, linhasProd, 0);
-            // }
-            // if (textToUpper(id) == "R")
-            // {
-            //     choice = 'R';
-            //     break;
-            // }
-            // getMatLineProd(mProd, mProduto, linha);
+            cout << "Informe o ID do cliente que deseja remover: ";
+            cin >> id;
+            linha = L.buscarCliente("ID", id);
+            while (linha < 0 && textToUpper(id) != "R")
+            {
+                cout << "O id inserido não foi encontrado.\n";
+                cout << "Insira novamente o id : ";
+                cin >> id;
+                linha = L.buscarCliente("ID", id);
+            }
+
+            if (textToUpper(id) == "R")
+            {
+                choice = 'R';
+                break;
+            }
+
             cout << endl;
             cout << "\033[32m======================================================================================\n";
-            // cout << "        Produto: \033[0m" << mProduto[0][1] << "  \033[32mQuantidade: \033[0m" << mProduto[0][2] <<"  \033[32mCusto: \033[0m" << mProduto[0][3] << "\n";
+            cout << "        Nome: \033[0m" << L.ListaClientes[linha].getNome() << "  \033[32mTelefone: \033[0m" << L.ListaClientes[linha].getTelefone() <<"  \033[32mMorada: \033[0m" << L.ListaClientes[linha].getMorada() << "\n";
             cout << "\033[32m======================================================================================\033[0m\n";
             cout << endl;
             cout << "Deseja realmente remover o produto? (S/N): ";
-            // cin >> id;
-            // id = textToUpper(id);
-            // if (id == "S")
-            // {
-            //     // diminuirLinhas(mProd, linhasProd, colunasProd, linha);
-            // }
+            cin >> choice;
+            choice = toupper(choice);
+            if (choice == 'S')
+            {
+                L.removerCliente(stoi(id));
+            }
             break;
         case 'M':
             cout << "Escolha o ID: ";

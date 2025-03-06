@@ -18,6 +18,7 @@ public:
 	Loja(Loja &L);
 //Cliente
 	void adicionarCliente(string nome, string telefone, string morada);
+	void removerCliente(int id);
 	void mostrarCliente(int id);
 	void mostrarClientes();
 	int getLastIdCliente();
