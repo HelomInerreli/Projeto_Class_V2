@@ -100,9 +100,25 @@ void Produto::setQuantidade()
 			
 }
 
-void Produto::setPreco(int preco)
+void Produto::setPreco()
 {
-	this->preco = preco;
+	string novoValor;
+	cout << "Informe o novo preço para o produto: ";
+            cin >> novoValor;
+            while (!A.validNum(novoValor) && A.textToUpper(novoValor) != "R")
+            {
+                cout << "Valor inserido não é um número.\n";
+                cout << "Informe o novo preço para o produto: ";
+                cin >> novoValor;
+            }
+			if (A.textToUpper(novoValor) != "R")
+			{
+				preco=stof(novoValor);
+			}
+			else
+			{
+				return;
+			}
 }
 
 string Produto::toString()

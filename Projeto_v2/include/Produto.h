@@ -27,7 +27,7 @@ public:
 	//modificadores
 	void setNome();
 	void setQuantidade();
-	void setPreco(int preco);
+	void setPreco();
 
 	//outras funcoes
 	string toString();

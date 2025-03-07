@@ -199,7 +199,7 @@ void Auxiliares::showMenuClientes(Loja L2)
             cout << "        Nome: \033[0m" << L.ListaClientes[linha].getNome() << "  \033[32mTelefone: \033[0m" << L.ListaClientes[linha].getTelefone() <<"  \033[32mMorada: \033[0m" << L.ListaClientes[linha].getMorada() << "\n";
             cout << "\033[32m======================================================================================\033[0m\n";
             cout << endl;
-            cout << "Deseja realmente remover o produto? (S/N): ";
+            cout << "Deseja realmente remover o cliente? (S/N): ";
             cin >> choice;
             choice = toupper(choice);
             if (choice == 'S')
@@ -281,6 +281,7 @@ void Auxiliares::showMenuAltCliente(int id, Loja L2)
 }
 
 void Auxiliares::showMenuStock(Loja L){
+    bool mostrarStock =false;
     char choice;
     string id;
     int linha;
@@ -290,9 +291,14 @@ void Auxiliares::showMenuStock(Loja L){
         cout << endl;
         cout << "                                    MENU STOCK\033[0m\n";
         cout << endl;
-        cout << "  M. MOSTRAR STOCK   " << "C. CRIAR PRODUTO  " << " Q. MODIFICAR  " << " E. ELIMINAR  " << "  R. VOLTAR\n";
+        cout << "  M. MOSTRAR STOCK   " << "C. CRIAR PRODUTO  " << " A. ALTERAR  " << " E. ELIMINAR  " << "  R. VOLTAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
+        if (mostrarStock)
+        {
+            L.mostrarProdutos();
+        }
+        
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
         cout << "======================================================================================\033[0m\n";
         cout << "Escolha uma opção: ";
@@ -302,14 +308,13 @@ void Auxiliares::showMenuStock(Loja L){
         switch (choice)
         {
         case 'M':
-            L.mostrarProdutos();
-            sleep(15);
+        mostrarStock=true;
             break;
         case 'C':
             showMenuAddProdutos(L);
             break;
         
-        case 'Q':
+        case 'A':
             cout << "Digite o ID do produto desejado : ";
             cin >> id;
             linha = L.buscaProduto(stoi(id));
@@ -329,7 +334,36 @@ void Auxiliares::showMenuStock(Loja L){
             showMenuAltProd(L, stoi(id));
             break;
         case 'E':
+        cout << "Informe o ID do produto que deseja remover: ";
+        cin >> id;
+        linha = L.buscaProduto(stoi(id));
+        while (linha < 0 && textToUpper(id) != "R")
+        {
+            cout << "O id inserido não foi encontrado.\n";
+            cout << "Insira novamente o id : ";
+            cin >> id;
+            linha = L.buscaProduto(stoi(id));
+        }
 
+        if (textToUpper(id) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        cout << endl;
+        cout << "\033[32m======================================================================================\n";
+        cout << "        ID: \033[0m" << L.Stock[linha].getId() << "  \033[32mNome: \033[0m" << L.Stock[linha].getNome() <<"  \033[32mPreco: \033[0m" << L.Stock[linha].getPreco() << "\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        cout << "Deseja realmente remover o produto? (S/N): ";
+        cin >> choice;
+        choice = toupper(choice);
+        if (choice == 'S')
+        {
+            L.removeProduto(stoi(id));
+        }
+        break;
             break;
         
         default:
@@ -414,7 +448,7 @@ void Auxiliares::showMenuAltProd(Loja L,int id)
         cout << endl;
         cout << "                                    MODIFICAR PRODUTO\033[0m\n";
         cout << endl;
-        cout << "   N. ALTERAR NOME   " << "Q. ALTERAR QUANTIDADE   " << "C. ALTERAR CUSTO   " << "R. RETORNAR\n";
+        cout << "   N. ALTERAR NOME   " << "Q. ALTERAR QUANTIDADE   " << "C. ALTERAR CUSTO  "<< "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
         L.mostrarProdutos();
@@ -427,23 +461,13 @@ void Auxiliares::showMenuAltProd(Loja L,int id)
         switch (choice)
         {
         case 'N':
-            
+            L.Stock[linha].setNome();
             break;
         case 'Q':
             L.Stock[linha].setQuantidade();
-
             break;
         case 'C':
-            cout << "Informe o novo custo para o produto: ";
-            cin >> novoValor;
-            while (!validNum(novoValor) && textToUpper(novoValor) != "R")
-            {
-                cout << "Valor inserido não é um número.\n";
-                cout << "Informe o novo custo para o produto: ";
-                cin >> novoValor;
-            }
-            break;
-
+            L.Stock[linha].setPreco();
         default:
             cout << "Opção inválida! Tente novamente.\n";
         }
