@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 Auxiliares A;
+
 Produto::Produto()
 {
 }
@@ -14,6 +15,7 @@ Produto::Produto(int id, string nome, int quantidade, float preco) {
 	this->quantidade = quantidade;
 	this->preco = preco;
 }
+
 void Produto::imprimirProduto(int* tamanhos)
 {
 string linha = "";
@@ -107,8 +109,3 @@ string Produto::toString()
 {
 	return "| " + to_string(id) + "  |   " + nome + "   | " + to_string(quantidade) + "  |  " + to_string(preco) + "|";
 }
-
-
-
-
-
