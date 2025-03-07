@@ -28,10 +28,12 @@ public:
 
 //Produto
 	void armazenaProduto(string nome, int quantidade, float preco);
+	void mostrarProdutos();
+	int* tamanhoColunasProdutos();
 	int buscaProduto( int id);
-	void imprimeStock();
 	void imprimeProduto(int i);
 	void removeProduto(int id);
+	void alteraProduto();
 	int getLastId();
 //Vendas
 

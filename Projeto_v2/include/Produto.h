@@ -25,12 +25,15 @@ public:
 	float getPreco();
 
 	//modificadores
-	void setNome(string nome);
-	void setQuantidade(int quantidade);
+	void setNome();
+	void setQuantidade();
 	void setPreco(int preco);
 
 	//outras funcoes
 	string toString();
-
+	void imprimirProduto(int* tamanhos);
+	int* tamanhoColunasProdutos();
+	int* tamanhoColunas();
+	void menuAtlProd();
 };
 

@@ -1,6 +1,9 @@
 #include "../include/Produto.h"
 #include <iomanip>
-
+#include "../include/Auxiliares.h"
+#include <string>
+#include <iostream>
+Auxiliares A;
 Produto::Produto()
 {
 }
@@ -10,6 +13,40 @@ Produto::Produto(int id, string nome, int quantidade, float preco) {
 	this->nome = nome;
 	this->quantidade = quantidade;
 	this->preco = preco;
+}
+void Produto::imprimirProduto(int* tamanhos)
+{
+string linha = "";
+	cout << linha << "\n";
+	Auxiliares aux;
+	cout << "| " << aux.addZero(id, 2) << " | " << nome;
+	for (int i = 0; i <= tamanhos[1] - nome.length(); i++)
+	{
+		cout << " ";
+	}
+	cout << " | " << quantidade;
+	for (int i = 0; i <= tamanhos[2] - to_string(quantidade).length()+1; i++)
+	{
+		cout << " ";
+	}
+	cout << " | " << preco;
+	for (int i = 0; i <= tamanhos[3] - to_string(preco).length()+3; i++)
+	{
+		cout << " ";
+	}
+	cout << " |";
+	cout << linha << "\n";
+}
+
+int* Produto::tamanhoColunas()
+{
+	int* tamanhos = new int[4];
+	tamanhos[0] = to_string(id).length();
+	tamanhos[1] = nome.length();
+	tamanhos[2] = to_string(quantidade).length();
+	tamanhos[3] = to_string(preco).length();
+	
+	return tamanhos;
 }
 
 int Produto::getId() 
@@ -32,14 +69,33 @@ float Produto::getPreco()
 	return preco;
 }
 
-void Produto::setNome(string nome)
+void Produto::setNome()
 {
-	this->nome = nome;
+	cout << "Informe o novo nome para o produto: ";
+            cin.ignore();
+            getline(cin, nome);
 }
 
-void Produto::setQuantidade(int quantidade)
-{
-	this->quantidade = quantidade;
+void Produto::setQuantidade()
+{	string novoValor;
+	cout << "Informe a nova quantidade para o produto: ";
+            cin >> novoValor;
+            while (!A.validNum(novoValor) && A.textToUpper(novoValor) != "R")
+            {
+                cout << "Valor inserido não é um número.\n";
+                cout << "Informe a nova quantidade para o produto: ";
+                cin >> novoValor;
+            }
+			if (A.textToUpper(novoValor) != "R")
+			{
+				quantidade=stoi(novoValor);
+			}
+			else
+			{
+				return;
+			}
+			
+			
 }
 
 void Produto::setPreco(int preco)

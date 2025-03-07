@@ -21,5 +21,8 @@ public:
 	void showMenu();
 	void showMenuClientes(Loja L2);
 	void showMenuAltCliente(int id, Loja L2);
+	void showMenuStock(Loja L);
+	void showMenuAddProdutos(Loja L);
+	void showMenuAltProd(Loja L, int id);
 };
 
