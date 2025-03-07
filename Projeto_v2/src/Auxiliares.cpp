@@ -126,8 +126,6 @@ bool Auxiliares::sorteio(int nSorte, float minCompra, float valorCompra)
     return ganhou;
 }
 
-
-
 // Funcoes para menus
 void Auxiliares::showMenu()
 {
