@@ -19,13 +19,14 @@ public:
 	Cliente();
 	Cliente(int id, string nome, string telefone, string morada);
 
-	////Fun��es seletoras
+	////Funções seletoras
 	int getId();
 	string getNome();
 	string getTelefone();
 	string getMorada();
 
 	//Funções de modificações
+	void addCliente(int id, string nome, string telefone, string morada);
 	void updateNome();
 	void updateTelefone();
 	void updateMorada();

@@ -25,6 +25,7 @@ public:
 	int* buscarClientes(string campo, string valor);
 	int buscarCliente(string campo, string valor);
 	int* tamanhosColunasClientes();
+	int qtdBuscarClientes(string campo, string valor);
 
 //Produto
 	void armazenaProduto(string nome, int quantidade, float preco);

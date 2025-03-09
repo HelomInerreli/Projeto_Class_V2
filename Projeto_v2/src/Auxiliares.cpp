@@ -169,12 +169,12 @@ void Auxiliares::showMenuClientes(Loja L2)
         switch (choice)
         {
         case 'C':
-            cout << "Consultando Stock...\n";
-            // showMenuSearchStock(mProd, linhasProd, colunasProd);
+            cout << "Consultando Cliente...\n";
+            showMenuBuscaCliente(L);
             break;
         case 'A':
-            cout << "Adicionando Produto...\n";
-            // showMenuAddProd(mProd, linhasProd, colunasProd);
+            cout << "Adicionando Cliente...\n";
+            showMenuAddCliente(L);
             break;
         case 'E':
             cout << "Informe o ID do cliente que deseja remover: ";
@@ -474,3 +474,157 @@ void Auxiliares::showMenuAltProd(Loja L,int id)
 
     } while (choice != 'R');
 }
+
+void Auxiliares::showMenuAddCliente(Loja L)
+{
+    char choice;
+    string id, nome, telefone, morada;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    ADICIONAR CLIENTE\033[0m\n";
+        cout << endl;
+        cout << "                                     R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        L.mostrarClientes();
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        id = to_string(L.getLastIdCliente() + 1);
+        cout << "ID: " << id << endl;
+        cout << "Insira o nome do cliente: ";
+        cin.ignore();
+        getline(cin, nome);
+        // cout <<"\n----------"<< nomeProd.size();
+        nome = textToUpper(nome);
+        if (nome == "R")
+        {
+            choice = 'R';
+            break;
+        }
+        cout << "Insira o Telefone: ";
+        cin >> telefone;
+
+        while (!validNum(telefone) && textToUpper(telefone) != "R")
+        {
+            cout << "Valor inserido não é um numero.\n";
+            cout << "Insira o Telefone: ";
+            cin >> telefone;
+        }
+        if (textToUpper(telefone) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        cout << "Insira a morada: ";
+        cin.ignore();
+        getline(cin, morada);
+        if (textToUpper(morada) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        L.adicionarCliente(nome, telefone, morada);
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuBuscaCliente(Loja L)
+{
+    char choice;
+    bool mostrarTabelaCompleta = false;
+    string valor;
+    int qtdLinhas = 0;
+    int *vecLinha = new int[10];
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                   CONSULTAR CLIENTE\033[0m\n";
+        cout << endl;
+        cout << " I. PROC. POR ID " << "N. PROC. POR NOME " << "T. PROC. POR TELEFONE " << "M. MOSTRAR TODOS CLIENTES " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        if (qtdLinhas > 0 && !mostrarTabelaCompleta)
+        {
+            for (int i = 0; i < qtdLinhas; i++)
+            {
+                
+                L.mostrarCliente(vecLinha[i]);
+            }
+        }
+        if (mostrarTabelaCompleta)
+        {
+            L.mostrarClientes();
+        }
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'M':
+            mostrarTabelaCompleta = true;
+            break;
+        case 'I':
+            cout << "Digite o ID do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            qtdLinhas = L.buscarCliente("ID", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            vecLinha[0] = qtdLinhas;
+            mostrarTabelaCompleta = false;
+            break;
+        case 'N':
+            cout << "Digite o nome do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            valor = textToUpper(valor);
+            vecLinha = L.buscarClientes("NOME", valor);
+            qtdLinhas = L.qtdBuscarClientes("NOME", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            mostrarTabelaCompleta = false;
+            break;
+        case 'T':
+            cout << "Digite o telefone do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            vecLinha = L.buscarClientes("TELEFONE", valor);
+            qtdLinhas = L.qtdBuscarClientes("TELEFONE", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            mostrarTabelaCompleta = false;
+        case 'R':
+            cout << "Retornando...\n";
+            break;
+
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+            sleep(1);
+        }
+    } while (choice != 'R');
+    delete[] vecLinha;
+}
+
