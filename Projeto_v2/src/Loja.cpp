@@ -27,7 +27,7 @@ Loja::Loja(Loja &L)
 //Cliente -------------------------------------------------------------------------------
 void Loja::adicionarCliente(string nome, string telefone, string morada)
 {
-    int retID = getLastId() + 1;
+    int retID = getLastIdCliente() + 1;
 
     if (contCliente < 100)
     {
@@ -263,6 +263,50 @@ int* Loja::buscarClientes(string campo, string valor)
     } 
     ids[cont] = -1;
     return ids;
+}
+
+int Loja::qtdBuscarClientes(string campo, string valor)
+{
+    int cont = 0;
+
+    if (campo == "ID")
+    {
+        for (int i = 0; i < contCliente; i++)
+        {
+            if (ListaClientes[i].getId() == stoi(valor))
+            {
+                cont++;
+            }	
+        }
+    } else if (campo == "NOME")
+    {
+        for (int i = 0; i < contCliente; i++)
+        {
+            if (ListaClientes[i].getNome() == valor)
+            {
+                cont++;
+            }
+        }
+    } else if (campo == "TELEFONE")
+    {
+        for (int i = 0; i < contCliente; i++)
+        {
+            if (ListaClientes[i].getTelefone() == valor)
+            {
+                cont++;
+            }
+        }
+    } else if (campo == "MORADA")
+    {
+        for (int i = 0; i < contCliente; i++)
+        {
+            if (ListaClientes[i].getMorada() == valor)
+            {
+                cont++;
+            }
+        }
+    } 
+    return cont;
 }
 
 int* Loja::tamanhosColunasClientes()

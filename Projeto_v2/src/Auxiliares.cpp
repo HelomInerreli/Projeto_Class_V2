@@ -169,12 +169,12 @@ void Auxiliares::showMenuClientes(Loja L2)
         switch (choice)
         {
         case 'C':
-            cout << "Consultando Stock...\n";
-            // showMenuSearchStock(mProd, linhasProd, colunasProd);
+            cout << "Consultando Cliente...\n";
+            showMenuBuscaCliente(L);
             break;
         case 'A':
-            cout << "Adicionando Produto...\n";
-            // showMenuAddProd(mProd, linhasProd, colunasProd);
+            cout << "Adicionando Cliente...\n";
+            showMenuAddCliente(L);
             break;
         case 'E':
             cout << "Informe o ID do cliente que deseja remover: ";
@@ -474,3 +474,320 @@ void Auxiliares::showMenuAltProd(Loja L,int id)
 
     } while (choice != 'R');
 }
+
+void Auxiliares::showMenuAddCliente(Loja L)
+{
+    char choice;
+    string id, nome, telefone, morada;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    ADICIONAR CLIENTE\033[0m\n";
+        cout << endl;
+        cout << "                                     R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        L.mostrarClientes();
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        id = to_string(L.getLastIdCliente() + 1);
+        cout << "ID: " << id << endl;
+        cout << "Insira o nome do cliente: ";
+        cin.ignore();
+        getline(cin, nome);
+        // cout <<"\n----------"<< nomeProd.size();
+        nome = textToUpper(nome);
+        if (nome == "R")
+        {
+            choice = 'R';
+            break;
+        }
+        cout << "Insira o Telefone: ";
+        cin >> telefone;
+
+        while (!validNum(telefone) && textToUpper(telefone) != "R")
+        {
+            cout << "Valor inserido não é um numero.\n";
+            cout << "Insira o Telefone: ";
+            cin >> telefone;
+        }
+        if (textToUpper(telefone) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        cout << "Insira a morada: ";
+        cin.ignore();
+        getline(cin, morada);
+        if (textToUpper(morada) == "R")
+        {
+            choice = 'R';
+            break;
+        }
+
+        L.adicionarCliente(nome, telefone, morada);
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuBuscaCliente(Loja L)
+{
+    char choice;
+    bool mostrarTabelaCompleta = false;
+    string valor;
+    int qtdLinhas = 0;
+    int *vecLinha = new int[10];
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                   CONSULTAR CLIENTE\033[0m\n";
+        cout << endl;
+        cout << " I. PROC. POR ID " << "N. PROC. POR NOME " << "T. PROC. POR TELEFONE " << "M. MOSTRAR TODOS CLIENTES " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        if (qtdLinhas > 0 && !mostrarTabelaCompleta)
+        {
+            for (int i = 0; i < qtdLinhas; i++)
+            {
+                
+                L.mostrarCliente(vecLinha[i]);
+            }
+        }
+        if (mostrarTabelaCompleta)
+        {
+            L.mostrarClientes();
+        }
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'M':
+            mostrarTabelaCompleta = true;
+            break;
+        case 'I':
+            cout << "Digite o ID do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            qtdLinhas = L.buscarCliente("ID", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            vecLinha[0] = qtdLinhas;
+            mostrarTabelaCompleta = false;
+            break;
+        case 'N':
+            cout << "Digite o nome do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            valor = textToUpper(valor);
+            vecLinha = L.buscarClientes("NOME", valor);
+            qtdLinhas = L.qtdBuscarClientes("NOME", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            mostrarTabelaCompleta = false;
+            break;
+        case 'T':
+            cout << "Digite o telefone do cliente desejado: ";
+            cin.ignore();
+            getline(cin, valor);
+            vecLinha = L.buscarClientes("TELEFONE", valor);
+            qtdLinhas = L.qtdBuscarClientes("TELEFONE", valor);
+            if (qtdLinhas < 0)
+            {
+                cout << "Cliente não encontrado!!!\n";
+                sleep(1);
+                break;
+            }
+            mostrarTabelaCompleta = false;
+        case 'R':
+            cout << "Retornando...\n";
+            break;
+
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+            sleep(1);
+        }
+    } while (choice != 'R');
+    delete[] vecLinha;
+}
+
+void Auxiliares::showMenuVendas(Loja L)
+{
+    char choice;
+    bool mostrarStock = false;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MENU DE VENDAS\033[0m\n";
+        cout << endl;
+        cout << "               V.VENDER   " << "C. CONSULTAR STOCK  " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        if (mostrarStock)
+        {
+            L.mostrarProdutos();
+        }
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'V':
+            cout << "Vender...\n";
+            // showMenuNovaVenda(mat, linhas, matProdVendas, linhasProdVendas, matStock, linhasMatStock);
+            break;
+        case 'C':
+            cout << "Consultando Produtos...\n";
+            mostrarStock=true;
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}
+
+// void Auxiliares::showMenuNovaVenda(Loja L)
+// {
+//     char opcao;
+//     bool retorno;
+//     string choice, qtdProd;
+//     int talao, linhaProd;
+//     int linhasCarr = 1;
+//     float subTotal = 0.00;
+//     string dataHora = getDateTime();
+//     talao = findLastId(matVenda, linhasMatVenda) + 1;
+//     string **mProduto = new string *[1];
+//     mProduto[0] = new string[4];
+//     string **mCarrinho = new string *[1]; // criar matriz para buscar produtos do id solicitado (na modificação de produto)
+//     for (int i = 0; i < linhasCarr; i++)
+//     {
+//         mCarrinho[i] = new string[6];
+//     }
+//     mCarrinho[0][0] = "ID PROD";
+//     mCarrinho[0][1] = "DESCRICAO DO PRODUTO";
+//     mCarrinho[0][2] = "QTD PROD";
+//     mCarrinho[0][3] = "VALOR";
+//     mCarrinho[0][4] = "VALOR + IVA";
+//     mCarrinho[0][5] = "VALOR TOTAL";
+
+//     do
+//     {
+//         system("clear"); // Limpa o terminal no Windows
+//         cout << "\033[32m======================================================================================\n";
+//         cout << endl;
+//         cout << "                             NOVA VENDA - TALÃO: \033[0m" << talao << "\n";
+//         cout << endl;
+//         // cout << dataHora <<"                VALOR TOTAL A PAGAR: " << arredondar(subTotal) << "€ \n";
+//         cout << "     F. FINALIZAR VENDA   " << "P. CONSULTAR PRODUTO   " << "C. CANCELAR VENDA   " << "R. RETORNAR\n";
+//         cout << "\033[32m======================================================================================\033[0m\n";
+//         L.mostrarProdutos();
+//         cout << endl;
+//         cout << "\033[32mData e Hora: " << dataHora << "                  VALOR TOTAL A PAGAR: " << arredondar(subTotal) << "€ \n";
+//         // cout << getDateTime() << "\n";
+//         cout << "======================================================================================\033[0m\n";
+//         cout << "Insira o ID do produto ou opção: ";
+//         cin >> choice;
+//         choice = textToUpper(choice);
+//         if (choice.length() > 0)
+//         {
+//             if (validNum(choice))
+//             {
+//                 opcao = 'Z';
+//             }
+//             else
+//             {
+//                 opcao = choice[0];
+//             }
+//         }
+
+//         switch (opcao)
+//         {
+//         case 'P':
+//             showMenuSearchStock(matStock, linhasMatStock, 4);
+//             break;
+//         case 'F':
+//             cout << "Finalizando venda...\n";
+//             retorno = showMenuFinalizarVenda(matVenda, linhasMatVenda, matProdVendas, linhasMatProdVendas, mCarrinho, linhasCarr, matStock, linhasMatStock, talao, subTotal, dataHora);
+//             if (retorno)
+//             {
+//                 break;
+//             }
+
+//             return;
+//         case 'C':
+//             return;
+//             break;
+//         case 'Z':
+//             linhaProd = findItem(choice, matStock, linhasMatStock, 0);
+//             if (linhaProd < 0)
+//             {
+//                 cout << "Produto não encontrado!!!\n";
+//                 sleep(1);
+//                 break;
+//             }
+//             getMatLineProd(matStock, mProduto, linhaProd);
+//             cout << endl;
+//             cout << "\033[32m======================================================================================\n";
+//             cout << "                    Produto: \033[0m" << mProduto[0][1] << "  \033[32mPreço: \033[0m" << arredondar(stof(mProduto[0][3]) * 1.30) << "€\n";
+//             cout << "\033[32m======================================================================================\033[0m\n";
+//             cout << endl;
+//             cout << "Informe a quantidade do produto: ";
+//             cin >> qtdProd;
+//             while (!validNum(qtdProd) && (textToUpper(qtdProd) != "R" || textToUpper(qtdProd) != "C"))
+//             {
+//                 cout << "Valor inserido não é um número.\n";
+//                 cout << "Informe a quantidade do produto: ";
+//                 cin >> qtdProd;
+//             }
+//             while (qtdProd == "0" || stoi(qtdProd) > stoi(mProduto[0][2]) && (textToUpper(qtdProd) != "R" || textToUpper(qtdProd) != "C"))
+//             {
+//                 cout << "Quantidade inválida! Insira uma quantidade maior que 0 e menor que o stock atual do produto\n";
+//                 cout << "Stock Atual do produto: " << mProduto[0][2] << "\n";
+//                 cout << "Informe a quantidade do produto: ";
+//                 cin >> qtdProd;
+//             }
+//             if (textToUpper(qtdProd) == "R")
+//             {
+//                 break;
+//             }
+//             if (textToUpper(qtdProd) == "C")
+//             {
+//                 return;
+//             }
+
+//             inserirProdutoVenda(choice, stoi(qtdProd), mCarrinho, linhasCarr, matStock, linhasMatStock, linhaProd);
+//             subTotal = calcSubTotal(mCarrinho, linhasCarr);
+//             break;
+//         default:
+//             if (opcao != 'R')
+//             {
+//                 cout << "Opção inválida! Tente novamente.\n";
+//                 sleep(1);
+//             }
+//         }
+
+//     } while (opcao != 'R');
+// }
