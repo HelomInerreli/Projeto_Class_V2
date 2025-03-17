@@ -4,8 +4,8 @@
 #include <iostream>
 
 using namespace std;
-Auxiliares A;
-// Auxiliares aux;
+
+Auxiliares auxV;
 
 Vendas::Vendas()
 {
@@ -21,7 +21,7 @@ Vendas::Vendas(int talao, string dataVenda, string cliente, float valorTotal)
 void Vendas::imprimirVendas(int* tamanhos)
 {string linha = "";
 	cout << linha << "\n";
-	cout << "| " << A.addZero(talao, 2) << " | " << dataVenda;
+	cout << "| " << auxV.addZero(talao, 2) << " | " << dataVenda;
 	for (int i = 0; i <= tamanhos[1] - dataVenda.length(); i++)
 	{
 		cout << " ";
@@ -69,7 +69,7 @@ Carrinho::Carrinho(int idProd, string descProd, int qtd, float preco, float prec
 void Carrinho::imprimirCarrinho(int* tamanhos)
 {string linha = "";
 	cout << linha << "\n";
-	cout << "| " << A.addZero(idProd, 2) << " | " << descProd;
+	cout << "| " << auxV.addZero(idProd, 2) << " | " << descProd;
 	for (int i = 0; i <= tamanhos[1] - descProd.length(); i++)
 	{
 		cout << " ";
@@ -125,7 +125,7 @@ ProdCompra::ProdCompra(int talao, int idProd, string descProd, int qtd, float pr
 void ProdCompra::imprimirCompra(int* tamanhos)
 {string linha = "";
 	cout << linha << "\n";
-	cout << "| " << A.addZero(idProd, 2) << " | " << talao;
+	cout << "| " << auxV.addZero(idProd, 2) << " | " << talao;
 	for (int i = 0; i <= tamanhos[1] - to_string(talao).length(); i++)
 	{
 		cout << " ";

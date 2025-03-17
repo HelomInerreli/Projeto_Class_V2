@@ -45,6 +45,8 @@ public:
 	void alteraProduto();
 	int getLastId();
 //Vendas
+	void mostrarVendas();
+	int* tamanhoColunasVendas();
 
 //Relatorios
 

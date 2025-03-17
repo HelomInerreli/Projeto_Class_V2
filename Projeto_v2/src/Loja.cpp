@@ -491,7 +491,80 @@ int* Loja::tamanhoColunasProdutos()
 }
 
 //Vendas -----------------------------------------------------------------------------------
+int* Loja::tamanhoColunasVendas()
+{
+    int* tamanhos = new int[4];
+    tamanhos[0] = 0;
+    tamanhos[1] = 0;
+    tamanhos[2] = 0;
+    tamanhos[3] = 0;
 
+    for (int i = 0; i < contProduto; i++)
+    {
+        int* tamanhosProduto = ListaVendas[i].tamanhoColunas();
+        for (int j = 0; j < 4; j++)
+        {
+            if (tamanhosProduto[j] > tamanhos[j])
+            {
+                tamanhos[j] = tamanhosProduto[j];
+            }
+        }
+    }
+
+    return tamanhos;
+}
+void Loja::mostrarVendas()
+{
+    int* tamanhos = tamanhoColunasVendas();
+    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
+    string txtTitulo = " LISTA DE VENDAS";
+    int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+    string linha = "";
+    for (int i = 0; i < tLinhas; i++)
+    {
+        linha += "-";
+    }
+    string linhaDupla = "";
+    for (int i = 0; i < tTitulo; i++)
+    {
+        linhaDupla += "=";
+    }
+    string cabecalho = "| ID";
+    for (int i = 0; i < tamanhos[0] - 2; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | NOME ";
+    for (int i = 0; i < tamanhos[1] - 4; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | QTD ";
+    for (int i = 0; i < tamanhos[2] - 3; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | PRECO ";
+    for (int i = 0; i < tamanhos[3] - 6; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += "|";
+
+    cout << endl;
+    cout << linha << "\n";
+    cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+    cout << linha << "\n";
+    cout << cabecalho << "\n";
+    cout << linha << "\n";
+
+    for (int i = 0; i < contVendas; i++)
+    {
+        ListaVendas[i].imprimirVendas(tamanhos);
+    }
+    cout << linha << "\n";
+    cout << endl;
+}
 //Relatorios -------------------------------------------------------------------------------
 
 //Auxiliares -------------------------------------------------------------------------------
