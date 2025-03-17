@@ -50,4 +50,5 @@ public:
     ProdCompra();
     ProdCompra(int talao, int idProd, string descProd, int qtd, float preco);
     
+    void imprimirProdCompra(int* tamanhos);
 };

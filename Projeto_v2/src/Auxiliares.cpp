@@ -797,3 +797,182 @@ void Auxiliares::showMenuVendas(Loja L)
         }
     } while (choice != 'R');
 }
+
+void Auxiliares::showMenuRelatorios(Loja L)
+{
+    char choice;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MENU DE RELATÓRIOS\033[0m\n";
+        cout << endl;
+        cout << "               V. VENDAS   " << "C. CLIENTES   " << "P. PRODUTOS   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'V':
+            cout << "Relatório de Vendas...\n";
+            //showMenuRelatorioVendas(matVenda, linhasMatVenda, matProdVendas, linhasMatProdVendas, matStock, linhasMatStock);
+            break;
+        case 'C':
+            cout << "Relatório de Clientes...\n";
+            //showMenuRelatorioClientes(matClientes, linhasMatClientes);
+            break;
+        case 'P':
+            cout << "Relatório de Produtos...\n";
+            //showMenuRelatorioProdutos(matStock, linhasMatStock);
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuRelatorioVendas(Loja L)
+{
+    char choice;
+    string nomeProd;
+    bool relVendas = false;
+    bool relVendasProd = false;
+    int codRel;
+
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    RELATÓRIO DE VENDAS\033[0m\n";
+        cout << endl;
+        cout << "     P. POR PRODUTO    " << "M. MAIS VENDIDOS    " << "V. MENOS VENDIDOS    "  << "R. RETORNAR\n";
+        cout << "                     L. LUCRO PRODUTOS MAIS VENDIDOS  " << "C. CLIENTES QUE MAIS COMPROU \n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        if (relVendas)
+        {
+            //impRelVendas(codRel);
+        }
+        if (relVendasProd)
+        {
+            //impRelVendasProd(nomeProd);
+        }
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'P':
+            cout << "Informe o nome do Produto: ";
+            cin.ignore();
+            getline(cin, nomeProd);
+            relVendas = false;
+            relVendasProd = true;
+            break;
+        case 'M':
+            codRel = 1;
+            relVendas = true;
+            relVendasProd = false;
+            break;
+        case 'V':
+            codRel = 2;
+            relVendas = true;
+            relVendasProd = false;
+            break;
+        case 'L':
+            codRel = 3;
+            relVendas = true;
+            relVendasProd = false;
+            break;
+        case 'C':
+            codRel = 4;
+            relVendas = true;
+            relVendasProd = false;
+            break;
+        
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuRelatorioClientes(Loja L)
+{
+    char choice;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    RELATÓRIO DE CLIENTES\033[0m\n";
+        cout << endl;
+        cout << "               T. TODOS CLIENTES   " << "C. CLIENTES POR PERÍODO   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'T':
+            cout << "Todos os clientes...\n";
+            //showMenuRelatorioTodosClientes(matClientes, linhasMatClientes);
+            break;
+        case 'C':
+            cout << "Clientes por período...\n";
+            //showMenuRelatorioClientesPeriodo(matClientes, linhasMatClientes);
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}
+
+void Auxiliares::showMenuRelatorioProdutos(Loja L)
+{
+    char choice;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    RELATÓRIO DE PRODUTOS\033[0m\n";
+        cout << endl;
+        cout << "               T. TODOS PRODUTOS   " << "C. PRODUTOS POR PERÍODO   " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'T':
+            cout << "Todos os produtos...\n";
+            //showMenuRelatorioTodosProdutos(matStock, linhasMatStock);
+            break;
+        case 'C':
+            cout << "Produtos por período...\n";
+            //showMenuRelatorioProdutosPeriodo(matStock, linhasMatStock);
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}

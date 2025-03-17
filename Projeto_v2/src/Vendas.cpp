@@ -47,3 +47,29 @@ ProdCompra::ProdCompra(int talao, int idProd, string descProd, int qtd, float pr
     this->qtd = qtd;
     this->preco = preco;
 }
+
+void ProdCompra::imprimirProdCompra(int* tamanhos)
+{
+    string linha = "| " + to_string(talao);
+    for (int i = 0; i < tamanhos[0] - to_string(talao).length(); i++)
+    {
+        linha += " ";
+    }
+    linha += " | " + dataVenda;
+    for (int i = 0; i < tamanhos[1] - dataVenda.length(); i++)
+    {
+        linha += " ";
+    }
+    linha += " | " + cliente;
+    for (int i = 0; i < tamanhos[2] - cliente.length(); i++)
+    {
+        linha += " ";
+    }
+    linha += " | " + arredondar(valorTotal);
+    for (int i = 0; i < tamanhos[3] - arredondar(valorTotal).length(); i++)
+    {
+        linha += " ";
+    }
+    linha += "  |";
+    cout << linha << "\n";
+}

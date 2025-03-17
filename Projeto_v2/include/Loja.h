@@ -47,6 +47,8 @@ public:
 //Vendas
 
 //Relatorios
+	void impRelVendasProd(string nomeProd);
+	void impRelVendas(int id);
 
 //Auxiliares
 	void preencherDadosIniciais();
