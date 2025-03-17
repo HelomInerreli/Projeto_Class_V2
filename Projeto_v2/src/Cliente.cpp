@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Auxiliares aux;
+Auxiliares auxCliente;
 
 Cliente::Cliente()
 {
@@ -53,7 +53,7 @@ void Cliente::updateTelefone()
 	cout << "Informe o novo telefone para o cliente: ";
 	cin.ignore();
 	getline(cin, novoValor);
-	while (!aux.validNum(novoValor) && aux.textToUpper(novoValor) != "R")
+	while (!auxCliente.validNum(novoValor) && auxCliente.textToUpper(novoValor) != "R")
 	{
 		cout << "Valor inserido não é um número.\n";
 		cout << "Informe o novo telefone para o cliente: ";
@@ -61,7 +61,7 @@ void Cliente::updateTelefone()
 		getline(cin, novoValor);
 	}
 
-	if (aux.textToUpper(novoValor) != "R")
+	if (auxCliente.textToUpper(novoValor) != "R")
 	{
 		telefone = novoValor;
 	}
@@ -83,7 +83,7 @@ void Cliente::imprimirCliente(int* tamanhos)
 {
 	string linha = "";
 	cout << linha << "\n";
-	cout << "| " << aux.addZero(id, 2) << " | " << nome;
+	cout << "| " << auxCliente.addZero(id, 2) << " | " << nome;
 	for (int i = 0; i <= tamanhos[1] - nome.length(); i++)
 	{
 		cout << " ";

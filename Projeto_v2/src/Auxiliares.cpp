@@ -638,47 +638,6 @@ void Auxiliares::showMenuBuscaCliente(Loja L)
     delete[] vecLinha; // Libera memória alocada antes de sair
 }
 
-void Auxiliares::showMenuVendas(Loja L)
-{
-    char choice;
-    bool mostrarStock = false;
-    do
-    {
-        system("clear"); // Limpa o terminal no Windows
-        cout << "\033[32m======================================================================================\n";
-        cout << endl;
-        cout << "                                    MENU DE VENDAS\033[0m\n";
-        cout << endl;
-        cout << "               V.VENDER   " << "C. CONSULTAR STOCK  " << "R. RETORNAR\n";
-        cout << "\033[32m======================================================================================\033[0m\n";
-        cout << endl;
-        if (mostrarStock)
-        {
-            L.mostrarProdutos();
-        }
-        cout << endl;
-        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
-        cout << "======================================================================================\033[0m\n";
-        cout << "Escolha uma opção: ";
-        cin >> choice;
-        choice = toupper(choice);
-
-        switch (choice)
-        {
-        case 'V':
-            cout << "Vender...\n";
-            // showMenuNovaVenda(mat, linhas, matProdVendas, linhasProdVendas, matStock, linhasMatStock);
-            break;
-        case 'C':
-            cout << "Consultando Produtos...\n";
-            mostrarStock=true;
-            break;
-        default:
-            cout << "Opção inválida! Tente novamente.\n";
-        }
-    } while (choice != 'R');
-}
-
 // void Auxiliares::showMenuNovaVenda(Loja L)
 // {
 //     char opcao;
@@ -801,3 +760,40 @@ void Auxiliares::showMenuVendas(Loja L)
 
 //     } while (opcao != 'R');
 // }
+
+void Auxiliares::showMenuVendas(Loja L)
+{
+    char choice;
+    do
+    {
+        system("clear"); // Limpa o terminal no Windows
+        cout << "\033[32m======================================================================================\n";
+        cout << endl;
+        cout << "                                    MENU DE VENDAS\033[0m\n";
+        cout << endl;
+        cout << "               V.VENDER   " << "C. CONSULTAR PRODUTOS DE UMA VENDA  " << "R. RETORNAR\n";
+        cout << "\033[32m======================================================================================\033[0m\n";
+        cout << endl;
+        // colocar funcao de imprimir vendas
+        cout << endl;
+        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
+        cout << "======================================================================================\033[0m\n";
+        cout << "Escolha uma opção: ";
+        cin >> choice;
+        choice = toupper(choice);
+
+        switch (choice)
+        {
+        case 'V':
+            cout << "Vender...\n";
+            //showMenuNovaVenda(mat, linhas, matProdVendas, linhasProdVendas, matStock, linhasMatStock);
+            break;
+        case 'C':
+            cout << "Consultando Produtos...\n";
+            //showMenuConsultaProdutosVendas(matProdVendas, linhasProdVendas, mat, linhas);
+            break;
+        default:
+            cout << "Opção inválida! Tente novamente.\n";
+        }
+    } while (choice != 'R');
+}
