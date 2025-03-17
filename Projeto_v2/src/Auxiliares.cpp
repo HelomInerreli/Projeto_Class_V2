@@ -254,7 +254,7 @@ void Auxiliares::showMenuAltCliente(int id, Loja L2)
         cout << "   N. ALTERAR NOME   " << "T. ALTERAR TELEFONE   " << "M. ALTERAR MORADA   " << "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
-        L.mostrarCliente(pos);
+        L.mostrarCliente(pos, true);
         cout << endl;
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
         cout << "======================================================================================\033[0m\n";
@@ -539,23 +539,24 @@ void Auxiliares::showMenuBuscaCliente(Loja L)
     bool mostrarTabelaCompleta = false;
     string valor;
     int qtdLinhas = 0;
-    int *vecLinha = new int[10];
+    int *vecLinha = nullptr; // Inicializa como nullptr para evitar problemas
     do
     {
-        system("clear"); // Limpa o terminal no Windows
+        system("clear"); // Limpa o terminal no Linux
         cout << "\033[32m======================================================================================\n";
         cout << endl;
         cout << "                                   CONSULTAR CLIENTE\033[0m\n";
         cout << endl;
-        cout << " I. PROC. POR ID " << "N. PROC. POR NOME " << "T. PROC. POR TELEFONE " << "M. MOSTRAR TODOS CLIENTES " << "R. RETORNAR\n";
+        cout << " I. PROC. ID    " << "N. PROC. NOME    " << "T. PROC. TELEFONE    " << "M. TODOS CLIENTES    " << "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
         if (qtdLinhas > 0 && !mostrarTabelaCompleta)
         {
+            cout << "Clientes encontrados: " << qtdLinhas << endl;
             for (int i = 0; i < qtdLinhas; i++)
             {
-                
-                L.mostrarCliente(vecLinha[i]);
+                bool showHeader = i == 0;
+                L.mostrarCliente(vecLinha[i], showHeader);
             }
         }
         if (mostrarTabelaCompleta)
@@ -578,54 +579,63 @@ void Auxiliares::showMenuBuscaCliente(Loja L)
             cout << "Digite o ID do cliente desejado: ";
             cin.ignore();
             getline(cin, valor);
-            qtdLinhas = L.buscarCliente("ID", valor);
-            if (qtdLinhas < 0)
+            qtdLinhas = L.qtdBuscarClientes("ID", valor);
+            if (qtdLinhas > 0)
+            {
+                delete[] vecLinha; // Libera memória anterior, se houver
+                vecLinha = L.buscarClientes("ID", valor);
+                mostrarTabelaCompleta = false;
+            }
+            else
             {
                 cout << "Cliente não encontrado!!!\n";
                 sleep(1);
-                break;
             }
-            vecLinha[0] = qtdLinhas;
-            mostrarTabelaCompleta = false;
             break;
-        case 'N':
+            case 'N':
             cout << "Digite o nome do cliente desejado: ";
-            cin.ignore();
+            cin.ignore(); // Limpa o buffer de entrada
             getline(cin, valor);
-            valor = textToUpper(valor);
-            vecLinha = L.buscarClientes("NOME", valor);
-            qtdLinhas = L.qtdBuscarClientes("NOME", valor);
-            if (qtdLinhas < 0)
+            // valor = textToUpper(valor); // Converte o valor para maiúsculas
+            qtdLinhas = L.qtdBuscarClientes("NOME", valor); // Busca a quantidade de clientes
+            if (qtdLinhas > 0)
+            {
+                delete[] vecLinha; // Libera memória anterior, se houver
+                vecLinha = L.buscarClientes("NOME", valor); // Busca os índices dos clientes
+                mostrarTabelaCompleta = false;
+            }
+            else
             {
                 cout << "Cliente não encontrado!!!\n";
                 sleep(1);
-                break;
             }
-            mostrarTabelaCompleta = false;
             break;
         case 'T':
             cout << "Digite o telefone do cliente desejado: ";
             cin.ignore();
             getline(cin, valor);
-            vecLinha = L.buscarClientes("TELEFONE", valor);
             qtdLinhas = L.qtdBuscarClientes("TELEFONE", valor);
-            if (qtdLinhas < 0)
+            if (qtdLinhas > 0)
+            {
+                delete[] vecLinha; // Libera memória anterior, se houver
+                vecLinha = L.buscarClientes("TELEFONE", valor);
+                mostrarTabelaCompleta = false;
+            }
+            else
             {
                 cout << "Cliente não encontrado!!!\n";
                 sleep(1);
-                break;
             }
-            mostrarTabelaCompleta = false;
+            break;
         case 'R':
             cout << "Retornando...\n";
             break;
-
         default:
             cout << "Opção inválida! Tente novamente.\n";
             sleep(1);
         }
     } while (choice != 'R');
-    delete[] vecLinha;
+    delete[] vecLinha; // Libera memória alocada antes de sair
 }
 
 void Auxiliares::showMenuVendas(Loja L)

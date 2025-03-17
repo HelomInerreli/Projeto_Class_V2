@@ -19,7 +19,7 @@ public:
 //Cliente
 	void adicionarCliente(string nome, string telefone, string morada);
 	void removerCliente(int id);
-	void mostrarCliente(int id);
+	void mostrarCliente(int id, bool showHeader);
 	void mostrarClientes();
 	int getLastIdCliente();
 	int* buscarClientes(string campo, string valor);

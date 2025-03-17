@@ -52,7 +52,7 @@ void Loja::removerCliente(int id)
     contCliente--;
 }
 
-void Loja::mostrarCliente(int pos)
+void Loja::mostrarCliente(int pos, bool showHeader)
 {
     int* tamanhos = tamanhosColunasClientes();
     int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
@@ -90,12 +90,22 @@ void Loja::mostrarCliente(int pos)
     }
     cabecalho += "  |";
 
-    cout << endl;
-    cout << linha << "\n";
-    cout << linhaDupla << txtTitulo << linhaDupla << "\n";
-    cout << linha << "\n";
-    cout << cabecalho << "\n";
-    cout << linha << "\n";
+    if (showHeader)
+    {
+        cout << endl;
+        cout << linha << "\n";
+        cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+        cout << linha << "\n";
+        cout << cabecalho << "\n";
+        cout << linha << "\n";
+    }
+    
+    // cout << endl;
+    // cout << linha << "\n";
+    // cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+    // cout << linha << "\n";
+    // cout << cabecalho << "\n";
+    // cout << linha << "\n";
 
 
     ListaClientes[pos].imprimirCliente(tamanhos);
@@ -174,19 +184,22 @@ int Loja::getLastIdCliente()
 
 int Loja::buscarCliente(string campo, string valor)
 {
+    string retorno = "";
     if (campo == "ID")
     {
         for (int i = 0; i < contCliente; i++)
         {
             if (ListaClientes[i].getId() == stoi(valor))
             {
+                cout << i << " - Cliente encontrado!\n";
                 return i;
             }	
         }
     } else if (campo == "NOME")
     {
         for (int i = 0; i < contCliente; i++)
-        {
+        { 
+            
             if (ListaClientes[i].getNome() == valor)
             {
                 return i;
