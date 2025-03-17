@@ -20,8 +20,7 @@ void Produto::imprimirProduto(int* tamanhos)
 {
 string linha = "";
 	cout << linha << "\n";
-	Auxiliares aux;
-	cout << "| " << aux.addZero(id, 2) << " | " << nome;
+	cout << "| " << A.addZero(id, 2) << " | " << nome;
 	for (int i = 0; i <= tamanhos[1] - nome.length(); i++)
 	{
 		cout << " ";

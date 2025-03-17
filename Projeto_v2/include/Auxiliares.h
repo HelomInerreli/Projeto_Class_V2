@@ -31,6 +31,7 @@ public:
 
 	void showMenuVendas(Loja L);
 	void showMenuNovaVenda(Loja L);
+
 	
 };
 
