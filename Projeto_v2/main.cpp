@@ -28,7 +28,7 @@ int main()
             A.showMenuStock(L);            break;
         case 'V':
             cout << "Opção Vendas\n";
-            A.showMenuVendas(L);
+            A.showMenuNovaVenda(L);
             break;
         case 'C':
             cout << "Opção Clientes\n";

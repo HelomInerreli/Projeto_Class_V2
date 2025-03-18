@@ -22,6 +22,11 @@ Loja::Loja(Loja &L)
     {
         Stock[i] = L.Stock[i];
     }
+    contVendas = L.contVendas;
+    for (int i = 0; i < contVendas; i++)
+    {
+        ListaVendas[i]=L.ListaVendas[i];
+    }
 }
 
 //Cliente -------------------------------------------------------------------------------
@@ -499,14 +504,14 @@ int* Loja::tamanhoColunasVendas()
     tamanhos[2] = 0;
     tamanhos[3] = 0;
 
-    for (int i = 0; i < contProduto; i++)
+    for (int i = 0; i < contVendas; i++)
     {
-        int* tamanhosProduto = ListaVendas[i].tamanhoColunas();
+        int* tamanhosVendas = ListaVendas[i].tamanhoColunas();
         for (int j = 0; j < 4; j++)
         {
-            if (tamanhosProduto[j] > tamanhos[j])
+            if (tamanhosVendas[j] > tamanhos[j])
             {
-                tamanhos[j] = tamanhosProduto[j];
+                tamanhos[j] = tamanhosVendas[j];
             }
         }
     }
@@ -517,7 +522,7 @@ void Loja::mostrarVendas()
 {
     int* tamanhos = tamanhoColunasVendas();
     int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
-    string txtTitulo = " LISTA DE VENDAS";
+    string txtTitulo = "=== LISTA DE VENDAS ===";
     int tTitulo = (tLinhas - txtTitulo.length()) / 2;
     string linha = "";
     for (int i = 0; i < tLinhas; i++)
@@ -529,22 +534,22 @@ void Loja::mostrarVendas()
     {
         linhaDupla += "=";
     }
-    string cabecalho = "| ID";
+    string cabecalho = "| TALAO";
     for (int i = 0; i < tamanhos[0] - 2; i++)
     {
         cabecalho += " ";
     }
-    cabecalho += " | NOME ";
+    cabecalho += " | DATA ";
     for (int i = 0; i < tamanhos[1] - 4; i++)
     {
         cabecalho += " ";
     }
-    cabecalho += " | QTD ";
+    cabecalho += " | CLIENTE ";
     for (int i = 0; i < tamanhos[2] - 3; i++)
     {
         cabecalho += " ";
     }
-    cabecalho += " | PRECO ";
+    cabecalho += " | VALOR TOTAL ";
     for (int i = 0; i < tamanhos[3] - 6; i++)
     {
         cabecalho += " ";
@@ -564,6 +569,20 @@ void Loja::mostrarVendas()
     }
     cout << linha << "\n";
     cout << endl;
+}
+int Loja::getLastIdVendas()
+{
+    int maiorId = 0;
+
+    for (int i = 0; i < contVendas; i++)
+    {
+        int id = ListaVendas[i].getTalao();
+        if ( id > maiorId)
+        {
+            maiorId = id;
+        }
+    }
+    return maiorId;
 }
 //Relatorios -------------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 #include "../include/Vendas.h"
+#include <iomanip>
 #include "../include/Auxiliares.h"
 #include <string>
 #include <iostream>
@@ -49,6 +50,10 @@ int* Vendas::tamanhoColunas()
 	tamanhos[3] = to_string(valorTotal).length();
 	
 	return tamanhos;
+}
+int Vendas::getTalao()
+{
+	return talao;
 }
 
 
@@ -108,6 +113,30 @@ int* Carrinho::tamanhoColunas()
     tamanhos[4] = to_string(precoTotal).length();
 	
 	return tamanhos;
+}
+int Carrinho::getId() 
+{
+	return idProd;
+}
+string Carrinho::getDesc() 
+{
+	return descProd;
+}
+int Carrinho::getQuantidade() 
+{
+	return qtd;
+}
+float Carrinho::getPreco() 
+{
+	return preco;
+}
+float Carrinho::getPrecoIva() 
+{
+	return precoIva;
+}
+float Carrinho::getPrecoTotal() 
+{
+	return precoTotal;
 }
 
 ProdCompra::ProdCompra()

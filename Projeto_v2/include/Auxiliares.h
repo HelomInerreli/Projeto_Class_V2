@@ -10,6 +10,9 @@ class Auxiliares
 private:
 
 public:
+Carrinho listaCarrinho[50];
+int contCarrinho = 0;
+	float calcSubTotal();
 	string textToUpper(string text);
 	string addZero(int num, int digitos);
 	string arredondar(float num);
@@ -29,7 +32,7 @@ public:
 	void showMenuAddProdutos(Loja L);
 	void showMenuAltProd(Loja L, int id);
 
-	void showMenuVendas(Loja L);
+
 	void showMenuNovaVenda(Loja L);
 
 	
