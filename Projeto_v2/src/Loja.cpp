@@ -2,6 +2,7 @@
 #include "../include/Auxiliares.h"
 #include <iostream>
 #include <string>
+#include <unistd.h>
 
 using namespace std;
 
@@ -21,6 +22,12 @@ Loja::Loja(Loja &L)
     for (int i = 0; i < contProduto; i++)
     {
         Stock[i] = L.Stock[i];
+    }
+
+    contProdCompra = L.contProdCompra;
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        ListaProdCompra[i] = L.ListaProdCompra[i];
     }
 }
 
@@ -493,11 +500,111 @@ int* Loja::tamanhoColunasProdutos()
 //Vendas -----------------------------------------------------------------------------------
 
 //Relatorios -------------------------------------------------------------------------------
+
+int* Loja::tamanhoColunasImpProdCompras()
+{
+    int* tamanhos = new int[5];
+    tamanhos[0] = 0;
+    tamanhos[1] = 0;
+    tamanhos[2] = 0;
+    tamanhos[3] = 0;
+    tamanhos[4] = 0;
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        int* tamanhosProdCompra = ListaProdCompra[i].tamanhoColunas();
+        for (int j = 0; j < 5; j++)
+        {
+            if (tamanhosProdCompra[j] > tamanhos[j])
+            {
+                tamanhos[j] = tamanhosProdCompra[j];
+                // cout << "Tamanhos J: " << tamanhos[j] << endl;
+                // sleep(10);
+            }
+        }
+    }
+
+    return tamanhos;
+}
+
 void Loja::impRelVendasProd(string nomeProd)
 {
-    int* tamanhos = tamanhoColunas();
-    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
+    // cout << "Desc Prod: " << ListaProdCompra[0].getDescProd() << endl;
+    int* tamanhos = tamanhoColunasImpProdCompras();
+    tamanhos[0] = (tamanhos[0] < 5) ? 2 : tamanhos[0];
+    tamanhos[1] = (tamanhos[1] < 7) ? 4 : tamanhos[1];
+    tamanhos[2] = (tamanhos[2] < 9) ? 6 : tamanhos[2];
+    tamanhos[3] = (tamanhos[3] < 3) ? 3 : tamanhos[3];
+    tamanhos[4] = (tamanhos[4] < 5) ? 5 : tamanhos[4];
+    cout << "Tamanho: " << tamanhos[0] << " " << tamanhos[1] << " " << tamanhos[2] << " " << tamanhos[3] << " " << tamanhos[4] << endl;
+    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + tamanhos[4] + 23;
     string txtTitulo = " RELATORIO DE VENDAS POR PRODUTO ";
+    int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+    string linha = "";
+    for (int i = 0; i < tLinhas; i++)
+    {
+        linha += "-";
+    }
+    string linhaDupla = "";
+    for (int i = 0; i < tTitulo; i++)
+    {
+        linhaDupla += "=";
+    }
+    string cabecalho = "| TALAO";
+    for (int i = 0; i < tamanhos[0] - 5; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | ID PROD";
+    for (int i = 0; i < tamanhos[1] - 7; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | DESCRICAO ";
+    for (int i = 0; i < tamanhos[2] - 9; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | QTD";
+    for (int i = 0; i < tamanhos[3] - 3; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | VALOR";
+    for (int i = 0; i < tamanhos[4] - 6; i++)
+    {
+        cabecalho += " ";
+    }
+
+    cabecalho += "  |";
+
+
+    
+
+    cout << endl;
+    cout << linha << "\n";
+    cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+    cout << linha << "\n";
+    cout << cabecalho << "\n";
+    cout << linha << "\n";
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        if (ListaProdCompra[i].getDescProd() == nomeProd)
+        {
+            // cout << "Produto: " << nomeProd << endl;
+            ListaProdCompra[i].imprimirProdCompra(tamanhos);
+        }
+    }
+    cout << linha << "\n";
+    cout << endl;
+}
+
+void Loja::impRelVendas(int codRel)
+{
+    int* tamanhos = tamanhoColunasImpProdCompras();
+    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + 16;
+    string txtTitulo = " RELATORIO DE VENDAS ";
     int tTitulo = (tLinhas - txtTitulo.length()) / 2;
     string linha = "";
     for (int i = 0; i < tLinhas; i++)
@@ -540,14 +647,13 @@ void Loja::impRelVendasProd(string nomeProd)
 
     for (int i = 0; i < contProdCompra; i++)
     {
-        if (ListaProdCompra[i].descProd == nomeProd)
-        {
-            ListaProdCompra[i].imprimirProdCompra(tamanhos);
-        }
+        ListaProdCompra[i].imprimirProdCompra(tamanhos);
     }
     cout << linha << "\n";
     cout << endl;
 }
+
+
 
 //Auxiliares -------------------------------------------------------------------------------
 void Loja::preencherDadosIniciais()
@@ -568,11 +674,11 @@ void Loja::preencherDadosIniciais()
     Stock[4] = Produto(5, "Produto 5", 50, 50.5);
     contProduto = 5;
 
-    //Vendas
-    ListaVendas[0] = Vendas(1, "01/01/2021", "Joao", 100.5);
-    ListaVendas[1] = Vendas(2, "02/01/2021", "Maria", 50.5);
-    ListaVendas[2] = Vendas(3, "03/01/2021", "Jose", 62.0);
-    contVendas = 3;
+    // //Vendas
+    // ListaVendas[0] = Vendas(1, "01/01/2021", "Joao", 100.5);
+    // ListaVendas[1] = Vendas(2, "02/01/2021", "Maria", 50.5);
+    // ListaVendas[2] = Vendas(3, "03/01/2021", "Jose", 62.0);
+    // contVendas = 3;
 
     //ProdCompra
     ListaProdCompra[0] = ProdCompra(1, 1, "Produto 1", 10, 10.5);

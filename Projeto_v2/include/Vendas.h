@@ -36,19 +36,3 @@ public:
     Carrinho(int idProd, string descProd, int qtd, float preco, float precoIva, float precoTotal);
 
 };
-
-class ProdCompra
-{
-private:
-    int talao;
-    int idProd;
-    string descProd;
-    int qtd;
-    float preco;
-
-public:
-    ProdCompra();
-    ProdCompra(int talao, int idProd, string descProd, int qtd, float preco);
-    
-    void imprimirProdCompra(int* tamanhos);
-};

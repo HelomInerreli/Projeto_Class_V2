@@ -1,6 +1,6 @@
 #pragma once
 #include "Cliente.h"
-#include "Vendas.h"
+#include "ProdCompra.h"
 // #include "Auxiliares.h"
 #include "Produto.h"
 #include <iostream>
@@ -16,8 +16,8 @@ public:
 	int contProduto = 0;
 	Produto Stock[100];
 
-	int contVendas = 0;
-	Vendas ListaVendas[100];
+	// int contVendas = 0;
+	// Vendas ListaVendas[100];
 
 	int contProdCompra = 0;
 	ProdCompra ListaProdCompra[100];
@@ -47,9 +47,13 @@ public:
 //Vendas
 
 //Relatorios
+	int* tamanhoColunasImpProdCompras();
 	void impRelVendasProd(string nomeProd);
 	void impRelVendas(int id);
-
+	int* prodMaisVendido();
+	int* prodMenosVendido();
+	int* prodMaisLucrativo();
+	int* clienteMaisComprador();
 //Auxiliares
 	void preencherDadosIniciais();
 
