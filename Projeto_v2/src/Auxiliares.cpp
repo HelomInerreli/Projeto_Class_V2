@@ -765,203 +765,203 @@ float Auxiliares::calcSubTotal()
     return subTotal;
 }
 
-bool showMenuFinalizarVenda(Loja L)
-{
-    // srand(time(NULL));
-    int nSorte, step = 0;
-    char opcao = 'Z';
-    string cliente, entrada = "";
-    bool ganhou = false, sair = false, sorteado = false;
-    float valorPago = 0.00, troco = 0.00;
+// bool showMenuFinalizarVenda(Loja L)
+// {
+//     // srand(time(NULL));
+//     int nSorte, step = 0;
+//     char opcao = 'Z';
+//     string cliente, entrada = "";
+//     bool ganhou = false, sair = false, sorteado = false;
+//     float valorPago = 0.00, troco = 0.00;
 
-    // idVenda = findLastId(matVenda, linhasMatVenda) + 1;
-    // nSorte = rand() % 100 + 1;
-    nSorte = talao;
+//     // idVenda = findLastId(matVenda, linhasMatVenda) + 1;
+//     // nSorte = rand() % 100 + 1;
+//     nSorte = talao;
 
-    do
-    {
-    reexibir:
-        system("clear"); // Limpa o terminal no Windows
-        cout << "\033[32m======================================================================================\n";
-        cout << endl;
-        cout << "                          FINALIZAR VENDA - ID VENDA: \033[0m" << talao << "\n";
-        cout << endl;
-        cout << "              C. CANCELAR VENDA   " << "V. VOLTAR ETAPA   " << "R. RETORNAR A VENDA\n";
-        cout << "\033[32m======================================================================================\033[0m\n";
-        L.imp
-        cout << endl;
-        cout << "\033[32m======================================================================================\n";
-        cout << "                 Talão: \033[0m" << talao << "  \033[32mData e Hora: \033[0m" << dataHora << " \n";
-        if (cliente.length() > 0)
-        {
-            cout << "\033[32mNIF Cliente: \033[0m" << cliente << "                  \033[32mNúmero da Sorte: \033[0m" << addZero(nSorte, 3) << "\n";
-        }
-        cout << "\033[32mTotal a pagar: \033[0m" << arredondar(subTotal) << "€ \n";
-        cout << "\033[32mValor pago: \033[0m" << arredondar(valorPago) << "€ \n";
-        cout << "\033[32mTroco: \033[0m" << arredondar(troco) << "€ \n";
-        cout << "\033[32m======================================================================================\033[0m\n";
-        opcao = 'Z';
-        if (step == 0)
-        {
-            cout << "Insira o NIF do cliente ou N para não adicionar NIF: ";
-        }
-        else if (step == 1)
-        {
-            cout << "Deseja participar do sorteio? (S/N): ";
-            cin >> entrada;
-            entrada = textToUpper(entrada);
-            if (entrada == "S")
-            {
-                ganhou = sorteio(nSorte, 5.00, subTotal);
-                if (ganhou)
-                {
-                    cout << "Sua compra será grátis desta vez! Parabéns\n";
-                    step = 3;
-                    sorteado = true;
-                    goto reexibir;
-                }
-                else
-                {
-                    step = 2;
-                    sorteado = true;
-                    opcao = 'Z';
-                    goto reexibir;
-                }
-            }
-            else
-            {
-                step = 2;
-                goto reexibir;
-            }
-            // sair = true;
-        }
-        if (step == 2)
-        {
-            cout << "Insira o valor pago pelo cliente ou opção: ";
-        }
-        if (step == 3)
-        {
-            goto finalizar;
-        }
+//     do
+//     {
+//     reexibir:
+//         system("clear"); // Limpa o terminal no Windows
+//         cout << "\033[32m======================================================================================\n";
+//         cout << endl;
+//         cout << "                          FINALIZAR VENDA - ID VENDA: \033[0m" << talao << "\n";
+//         cout << endl;
+//         cout << "              C. CANCELAR VENDA   " << "V. VOLTAR ETAPA   " << "R. RETORNAR A VENDA\n";
+//         cout << "\033[32m======================================================================================\033[0m\n";
+//         L.imp
+//         cout << endl;
+//         cout << "\033[32m======================================================================================\n";
+//         cout << "                 Talão: \033[0m" << talao << "  \033[32mData e Hora: \033[0m" << dataHora << " \n";
+//         if (cliente.length() > 0)
+//         {
+//             cout << "\033[32mNIF Cliente: \033[0m" << cliente << "                  \033[32mNúmero da Sorte: \033[0m" << addZero(nSorte, 3) << "\n";
+//         }
+//         cout << "\033[32mTotal a pagar: \033[0m" << arredondar(subTotal) << "€ \n";
+//         cout << "\033[32mValor pago: \033[0m" << arredondar(valorPago) << "€ \n";
+//         cout << "\033[32mTroco: \033[0m" << arredondar(troco) << "€ \n";
+//         cout << "\033[32m======================================================================================\033[0m\n";
+//         opcao = 'Z';
+//         if (step == 0)
+//         {
+//             cout << "Insira o NIF do cliente ou N para não adicionar NIF: ";
+//         }
+//         else if (step == 1)
+//         {
+//             cout << "Deseja participar do sorteio? (S/N): ";
+//             cin >> entrada;
+//             entrada = textToUpper(entrada);
+//             if (entrada == "S")
+//             {
+//                 ganhou = sorteio(nSorte, 5.00, subTotal);
+//                 if (ganhou)
+//                 {
+//                     cout << "Sua compra será grátis desta vez! Parabéns\n";
+//                     step = 3;
+//                     sorteado = true;
+//                     goto reexibir;
+//                 }
+//                 else
+//                 {
+//                     step = 2;
+//                     sorteado = true;
+//                     opcao = 'Z';
+//                     goto reexibir;
+//                 }
+//             }
+//             else
+//             {
+//                 step = 2;
+//                 goto reexibir;
+//             }
+//             // sair = true;
+//         }
+//         if (step == 2)
+//         {
+//             cout << "Insira o valor pago pelo cliente ou opção: ";
+//         }
+//         if (step == 3)
+//         {
+//             goto finalizar;
+//         }
 
-        cin >> entrada;
-        entrada = textToUpper(entrada);
+//         cin >> entrada;
+//         entrada = textToUpper(entrada);
 
-        if (entrada == "R" || entrada == "V" || entrada == "C" || entrada == "N")
-        {
-            opcao = entrada[0];
-        }
-        else if (!validNum(entrada) && entrada.length() > 0)
-        {
-            opcao = 'S';
-        }
+//         if (entrada == "R" || entrada == "V" || entrada == "C" || entrada == "N")
+//         {
+//             opcao = entrada[0];
+//         }
+//         else if (!validNum(entrada) && entrada.length() > 0)
+//         {
+//             opcao = 'S';
+//         }
 
-        switch (opcao)
-        {
-        case 'Z':
-            if (step == 0 && entrada.length() == 9)
-            {
-                cliente = entrada;
-                step = 1;
-            }
-            else if (step == 0 && entrada.length() != 9)
-            {
-                cout << "NIF inválido! Insira um NIF válido.\n";
-                sleep(1);
-            }
-            if (step == 2)
-            {
+//         switch (opcao)
+//         {
+//         case 'Z':
+//             if (step == 0 && entrada.length() == 9)
+//             {
+//                 cliente = entrada;
+//                 step = 1;
+//             }
+//             else if (step == 0 && entrada.length() != 9)
+//             {
+//                 cout << "NIF inválido! Insira um NIF válido.\n";
+//                 sleep(1);
+//             }
+//             if (step == 2)
+//             {
 
-                valorPago = stof(entrada);
-                while (valorPago < subTotal && entrada != "C" && entrada != "R" && entrada != "V")
-                {
-                    cout << "Valor pago é inferior ao total a pagar. Insira um valor igual ou superior ao total a pagar.\n";
-                    cout << "Insira o valor pago pelo cliente ou opção: ";
-                    cin >> entrada;
-                    entrada = textToUpper(entrada);
-                    while (!validNum(entrada) && entrada != "C" && entrada != "R" && entrada != "V")
-                    {
-                        cout << "Valor inserido não é um número.\n";
-                        cout << "Insira o valor pago pelo cliente ou opção: ";
-                        cin >> entrada;
-                        entrada = textToUpper(entrada);
-                    }
-                    valorPago = stof(entrada);
-                    if (entrada == "C" || entrada == "R" || entrada == "V")
-                    {
-                        break;
-                    }
-                }
-                if (entrada == "C" || entrada == "R" || entrada == "V")
-                {
-                    opcao = entrada[0];
-                    goto finalizar;
-                }
-                troco = valorPago - subTotal;
-                step = 3;
-                goto reexibir;
-            }
-        finalizar:
-            if (step == 3)
-            {
+//                 valorPago = stof(entrada);
+//                 while (valorPago < subTotal && entrada != "C" && entrada != "R" && entrada != "V")
+//                 {
+//                     cout << "Valor pago é inferior ao total a pagar. Insira um valor igual ou superior ao total a pagar.\n";
+//                     cout << "Insira o valor pago pelo cliente ou opção: ";
+//                     cin >> entrada;
+//                     entrada = textToUpper(entrada);
+//                     while (!validNum(entrada) && entrada != "C" && entrada != "R" && entrada != "V")
+//                     {
+//                         cout << "Valor inserido não é um número.\n";
+//                         cout << "Insira o valor pago pelo cliente ou opção: ";
+//                         cin >> entrada;
+//                         entrada = textToUpper(entrada);
+//                     }
+//                     valorPago = stof(entrada);
+//                     if (entrada == "C" || entrada == "R" || entrada == "V")
+//                     {
+//                         break;
+//                     }
+//                 }
+//                 if (entrada == "C" || entrada == "R" || entrada == "V")
+//                 {
+//                     opcao = entrada[0];
+//                     goto finalizar;
+//                 }
+//                 troco = valorPago - subTotal;
+//                 step = 3;
+//                 goto reexibir;
+//             }
+//         finalizar:
+//             if (step == 3)
+//             {
 
-                // Adicionar a matriz de vendas
-                updateStockVenda(matStock, matCarrinho, linhaStock, linhasCarrinho);
-                updateMatProdVendas(matProdVendas, matCarrinho, linhasProdVendas, 5, linhasCarrinho, to_string(talao));
-                aumentarLinhas(matVenda, linhasMatVenda, 4, 1);
-                matVenda[linhasMatVenda - 1][0] = to_string(talao);
-                matVenda[linhasMatVenda - 1][1] = dataHora;
-                matVenda[linhasMatVenda - 1][2] = cliente;
-                matVenda[linhasMatVenda - 1][3] = arredondar(subTotal);
-                cout << "      Compra finalizada com sucesso! Obrigado pela preferência e volte sempre\n";
-                sleep(5);
-                return false;
-            }
+//                 // Adicionar a matriz de vendas
+//                 updateStockVenda(matStock, matCarrinho, linhaStock, linhasCarrinho);
+//                 updateMatProdVendas(matProdVendas, matCarrinho, linhasProdVendas, 5, linhasCarrinho, to_string(talao));
+//                 aumentarLinhas(matVenda, linhasMatVenda, 4, 1);
+//                 matVenda[linhasMatVenda - 1][0] = to_string(talao);
+//                 matVenda[linhasMatVenda - 1][1] = dataHora;
+//                 matVenda[linhasMatVenda - 1][2] = cliente;
+//                 matVenda[linhasMatVenda - 1][3] = arredondar(subTotal);
+//                 cout << "      Compra finalizada com sucesso! Obrigado pela preferência e volte sempre\n";
+//                 sleep(5);
+//                 return false;
+//             }
 
-            break;
-        case 'V':
-            if (step > 0)
-            {
-                if (step == 2)
-                {
-                    step = 0;
-                }
-                else
-                {
-                    step--;
-                }
-            }
-            else
-            {
-                cout << "Não é possível voltar mais etapas.\n";
-                sleep(1);
-            }
+//             break;
+//         case 'V':
+//             if (step > 0)
+//             {
+//                 if (step == 2)
+//                 {
+//                     step = 0;
+//                 }
+//                 else
+//                 {
+//                     step--;
+//                 }
+//             }
+//             else
+//             {
+//                 cout << "Não é possível voltar mais etapas.\n";
+//                 sleep(1);
+//             }
 
-            break;
-        case 'C':
-            cout << "Cancelando venda...\n";
-            sleep(1);
-            sair = true;
-            // colocar para voltar para menu principal de vendas
-            return false;
-            break;
-        case 'N':
-            cout << "NIF não informado.\n";
-            sleep(1);
-            step = 2;
-            break;
-        case 'R':
-            cout << "Retornando a venda...\n";
-            sleep(1);
-            sair = false;
-            return true;
-            break;
-        default:
-            cout << "Opção inválida! Tente novamente.\n";
-            sleep(2);
-        }
-    } while (choice != 'R');
-}
+//             break;
+//         case 'C':
+//             cout << "Cancelando venda...\n";
+//             sleep(1);
+//             sair = true;
+//             // colocar para voltar para menu principal de vendas
+//             return false;
+//             break;
+//         case 'N':
+//             cout << "NIF não informado.\n";
+//             sleep(1);
+//             step = 2;
+//             break;
+//         case 'R':
+//             cout << "Retornando a venda...\n";
+//             sleep(1);
+//             sair = false;
+//             return true;
+//             break;
+//         default:
+//             cout << "Opção inválida! Tente novamente.\n";
+//             sleep(2);
+//         }
+//     } while (choice != 'R');
+// }
 
 void Auxiliares::showMenuRelatorioVendas(Loja L)
 {

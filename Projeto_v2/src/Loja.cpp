@@ -36,6 +36,7 @@ Loja::Loja(Loja &L)
         ListaVendas[i]=L.ListaVendas[i];
     }
 }
+}
 
 //Cliente -------------------------------------------------------------------------------
 void Loja::adicionarCliente(string nome, string telefone, string morada)

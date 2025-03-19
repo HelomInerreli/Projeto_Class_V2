@@ -1,6 +1,7 @@
 #pragma once
 #include "Cliente.h"
 #include "ProdCompra.h"
+#include "Vendas.h"
 // #include "Auxiliares.h"
 #include "Produto.h"
 #include <iostream>
@@ -16,8 +17,8 @@ public:
 	int contProduto = 0;
 	Produto Stock[100];
 
-	// int contVendas = 0;
-	// Vendas ListaVendas[100];
+	int contVendas = 0;
+	Vendas ListaVendas[100];
 
 	int contProdCompra = 0;
 	ProdCompra ListaProdCompra[100];
