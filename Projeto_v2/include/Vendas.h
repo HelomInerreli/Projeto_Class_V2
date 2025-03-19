@@ -39,19 +39,3 @@ public:
     void imprimirCarrinho(int* tamanho);
     int* tamanhoColunas();
 };
-
-class ProdCompra
-{
-private:
-    int talao;
-    int idProd;
-    string descProd;
-    int qtd;
-    float preco;
-
-public:
-    ProdCompra();
-    ProdCompra(int talao, int idProd, string descProd, int qtd, float preco);
-    void imprimirCompra(int* tamanho);
-    int* tamanhoColunas();  
-};

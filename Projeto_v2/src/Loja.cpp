@@ -2,8 +2,11 @@
 #include "../include/Auxiliares.h"
 #include <iostream>
 #include <string>
+#include <unistd.h>
 
 using namespace std;
+
+Auxiliares auxL;
 
 Loja::Loja()
 {
@@ -21,6 +24,12 @@ Loja::Loja(Loja &L)
     for (int i = 0; i < contProduto; i++)
     {
         Stock[i] = L.Stock[i];
+    }
+
+    contProdCompra = L.contProdCompra;
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        ListaProdCompra[i] = L.ListaProdCompra[i];
     }
 }
 
@@ -191,7 +200,7 @@ int Loja::buscarCliente(string campo, string valor)
         {
             if (ListaClientes[i].getId() == stoi(valor))
             {
-                cout << i << " - Cliente encontrado!\n";
+                // cout << i << " - Cliente encontrado!\n";
                 return i;
             }	
         }
@@ -494,6 +503,324 @@ int* Loja::tamanhoColunasProdutos()
 
 //Relatorios -------------------------------------------------------------------------------
 
+int* Loja::tamanhoColunasImpProdCompras()
+{
+    int* tamanhos = new int[5];
+    tamanhos[0] = 0;
+    tamanhos[1] = 0;
+    tamanhos[2] = 0;
+    tamanhos[3] = 0;
+    tamanhos[4] = 0;
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        int* tamanhosProdCompra = ListaProdCompra[i].tamanhoColunas();
+        for (int j = 0; j < 5; j++)
+        {
+            if (tamanhosProdCompra[j] > tamanhos[j])
+            {
+                tamanhos[j] = tamanhosProdCompra[j];
+                // cout << "Tamanhos J: " << tamanhos[j] << endl;
+                // sleep(10);
+            }
+        }
+    }
+
+    return tamanhos;
+}
+
+void Loja::impRelVendasProd(string nomeProd)
+{
+    // cout << "Desc Prod: " << ListaProdCompra[0].getDescProd() << endl;
+    int* tamanhos = tamanhoColunasImpProdCompras();
+    tamanhos[0] = (tamanhos[0] < 5) ? 2 : tamanhos[0];
+    tamanhos[1] = (tamanhos[1] < 7) ? 4 : tamanhos[1];
+    tamanhos[2] = (tamanhos[2] < 9) ? 6 : tamanhos[2];
+    tamanhos[3] = (tamanhos[3] < 3) ? 3 : tamanhos[3];
+    tamanhos[4] = (tamanhos[4] < 5) ? 5 : tamanhos[4];
+    // cout << "Tamanho: " << tamanhos[0] << " " << tamanhos[1] << " " << tamanhos[2] << " " << tamanhos[3] << " " << tamanhos[4] << endl;
+    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + tamanhos[4] + 23;
+    string txtTitulo = " RELATORIO DE VENDAS POR PRODUTO ";
+    int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+    string linha = "";
+    for (int i = 0; i < tLinhas; i++)
+    {
+        linha += "-";
+    }
+    string linhaDupla = "";
+    for (int i = 0; i < tTitulo; i++)
+    {
+        linhaDupla += "=";
+    }
+    string cabecalho = "| TALAO";
+    for (int i = 0; i < tamanhos[0] - 5; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | ID PROD";
+    for (int i = 0; i < tamanhos[1] - 7; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | DESCRICAO ";
+    for (int i = 0; i < tamanhos[2] - 9; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | QTD";
+    for (int i = 0; i < tamanhos[3] - 3; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | VALOR";
+    for (int i = 0; i < tamanhos[4] - 6; i++)
+    {
+        cabecalho += " ";
+    }
+
+    cabecalho += "  |";
+
+
+    
+
+    cout << endl;
+    cout << linha << "\n";
+    cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+    cout << linha << "\n";
+    cout << cabecalho << "\n";
+    cout << linha << "\n";
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        if (ListaProdCompra[i].getDescProd() == nomeProd)
+        {
+            // cout << "Produto: " << nomeProd << endl;
+            ListaProdCompra[i].imprimirProdCompra(tamanhos);
+        }
+    }
+    cout << linha << "\n";
+    cout << endl;
+}
+
+void Loja::impRelVendas()
+{
+    int* maisVendido = prodMaisVendido();
+    int* menosVendido = prodMenosVendido();
+    int* maisLucrativo = prodMaisLucrativo();
+    int* maisComprador = clienteMaisComprador();
+
+    cout << "\n========================================\n";
+    cout << "        RELATORIO GERAL DE VENDAS          \n";
+    cout << "========================================\n";
+
+    // Produto mais vendido
+    cout << "\n>> Produto Mais Vendido:\n";
+    cout << "   - ID: " << maisVendido[0] << "\n";
+    cout << "   - Descricao: " << Stock[buscaProduto(maisVendido[0])].getNome() << "\n";
+    cout << "   - Quantidade: " << maisVendido[1] << "\n";
+
+    // Produto menos vendido
+    cout << "\n>> Produto Menos Vendido:\n";
+    cout << "   - ID: " << menosVendido[0] << "\n";
+    cout << "   - Descricao: " << Stock[buscaProduto(menosVendido[0])].getNome() << "\n";
+    cout << "   - Quantidade: " << menosVendido[1] << "\n";
+
+    // Produto mais lucrativo
+    cout << "\n>> Produto Mais Lucrativo:\n";
+    cout << "   - ID: " << maisLucrativo[0] << "\n";
+    cout << "   - Descricao: " << Stock[buscaProduto(maisLucrativo[0])].getNome() << "\n";
+    cout << "   - Lucro: " << auxL.arredondar(maisLucrativo[1]) << " €\n";
+
+    // Cliente que mais comprou
+    cout << "\n>> Cliente Que Mais Comprou:\n";
+    cout << "   - ID: " << maisComprador[0] << "\n";
+    cout << "   - Nome: " << ListaClientes[buscarCliente("ID", to_string(maisComprador[0]))].getNome() << "\n";
+    cout << "   - Quantidade de compras: " << maisComprador[1] << "\n";
+    cout << "   - Total Gasto: " << auxL.arredondar(maisComprador[2]) << " €\n";
+
+    cout << "========================================\n";
+
+    // Cleanup
+    delete[] maisVendido;
+    delete[] menosVendido;
+    delete[] maisLucrativo;
+    delete[] maisComprador;
+}
+
+int* Loja::prodMaisVendido()
+{
+    int* qtd = new int[contProduto];
+    int* id = new int[contProduto];
+    string* nomes = new string[contProduto];
+    int* maisVendido = new int[3]; // [ID, Quantidade, Nome]
+    int maiorQtd = 0;
+    int pos = 0;
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        qtd[i] = 0;
+        id[i] = Stock[i].getId();
+        nomes[i] = Stock[i].getNome();
+    }
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        for (int j = 0; j < contProduto; j++)
+        {
+            if (ListaProdCompra[i].getDescProd() == Stock[j].getNome())
+            {
+                qtd[j] += ListaProdCompra[i].getQtd();
+            }
+        }
+    }
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        if (qtd[i] > maiorQtd)
+        {
+            maiorQtd = qtd[i];
+            pos = i;
+        }
+    }
+
+    maisVendido[0] = id[pos];
+    maisVendido[1] = maiorQtd;
+
+    return maisVendido;
+}
+
+int* Loja::prodMenosVendido()
+{
+    int* qtd = new int[contProduto];
+    int* id = new int[contProduto];
+    string* nomes = new string[contProduto];
+    int* menosVendido = new int[3]; // [ID, Quantidade, Nome]
+    int menorQtd = 999999;
+    int pos = 0;
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        qtd[i] = 0;
+        id[i] = Stock[i].getId();
+        nomes[i] = Stock[i].getNome();
+    }
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        for (int j = 0; j < contProduto; j++)
+        {
+            if (ListaProdCompra[i].getDescProd() == Stock[j].getNome())
+            {
+                qtd[j] += ListaProdCompra[i].getQtd();
+            }
+        }
+    }
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        if (qtd[i] < menorQtd)
+        {
+            menorQtd = qtd[i];
+            pos = i;
+        }
+    }
+
+    menosVendido[0] = id[pos];
+    menosVendido[1] = menorQtd;
+
+    return menosVendido;
+}
+
+int* Loja::prodMaisLucrativo()
+{
+    int* qtd = new int[contProduto];
+    float* preco = new float[contProduto];
+    int* id = new int[contProduto];
+    string* nomes = new string[contProduto];
+    int* maisLucrativo = new int[3]; // [ID, Lucro, Nome]
+    float maiorLucro = 0;
+    int pos = 0;
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        qtd[i] = 0;
+        id[i] = Stock[i].getId();
+        preco[i] = Stock[i].getPreco();
+        nomes[i] = Stock[i].getNome();
+    }
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        for (int j = 0; j < contProduto; j++)
+        {
+            if (ListaProdCompra[i].getDescProd() == Stock[j].getNome())
+            {
+                qtd[j] += ListaProdCompra[i].getQtd();
+            }
+        }
+    }
+
+    for (int i = 0; i < contProduto; i++)
+    {
+        if (qtd[i] * preco[i] > maiorLucro)
+        {
+            maiorLucro = qtd[i] * preco[i];
+            pos = i;
+        }
+    }
+
+    maisLucrativo[0] = id[pos];
+    maisLucrativo[1] = maiorLucro;
+
+    return maisLucrativo;
+}
+
+int* Loja::clienteMaisComprador()
+{
+    int* qtd = new int[contCliente];
+    float* totalGasto = new float[contCliente];
+    int* id = new int[contCliente];
+    string* nomes = new string[contCliente];
+    int* maisComprador = new int[4]; // [ID, Quantidade, Total Gasto, Nome]
+    int maiorQtd = 0;
+    int pos = 0;
+
+    for (int i = 0; i < contCliente; i++)
+    {
+        qtd[i] = 0;
+        totalGasto[i] = 0;
+        id[i] = ListaClientes[i].getId();
+        nomes[i] = ListaClientes[i].getNome();
+    }
+
+    for (int i = 0; i < contProdCompra; i++)
+    {
+        for (int j = 0; j < contCliente; j++)
+        {
+            if (ListaProdCompra[i].getTalao() == ListaClientes[j].getId())
+            {
+                qtd[j] += ListaProdCompra[i].getQtd();
+                totalGasto[j] += ListaProdCompra[i].getQtd() * ListaProdCompra[i].getPreco();
+            }
+        }
+    }
+
+    for (int i = 0; i < contCliente; i++)
+    {
+        if (qtd[i] > maiorQtd)
+        {
+            maiorQtd = qtd[i];
+            pos = i;
+        }
+    }
+
+    maisComprador[0] = id[pos];
+    maisComprador[1] = maiorQtd;
+    maisComprador[2] = totalGasto[pos];
+
+    return maisComprador;
+}
+
 //Auxiliares -------------------------------------------------------------------------------
 void Loja::preencherDadosIniciais()
 {
@@ -513,11 +840,11 @@ void Loja::preencherDadosIniciais()
     Stock[4] = Produto(5, "Produto 5", 50, 50.5);
     contProduto = 5;
 
-    //Vendas
-    ListaVendas[0] = Vendas(1, "01/01/2021", "Joao", 100.5);
-    ListaVendas[1] = Vendas(2, "02/01/2021", "Maria", 50.5);
-    ListaVendas[2] = Vendas(3, "03/01/2021", "Jose", 62.0);
-    contVendas = 3;
+    // //Vendas
+    // ListaVendas[0] = Vendas(1, "01/01/2021", "Joao", 100.5);
+    // ListaVendas[1] = Vendas(2, "02/01/2021", "Maria", 50.5);
+    // ListaVendas[2] = Vendas(3, "03/01/2021", "Jose", 62.0);
+    // contVendas = 3;
 
     //ProdCompra
     ListaProdCompra[0] = ProdCompra(1, 1, "Produto 1", 10, 10.5);

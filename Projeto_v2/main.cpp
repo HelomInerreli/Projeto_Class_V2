@@ -14,10 +14,13 @@ int main()
     Auxiliares A;
 
     L.preencherDadosIniciais();
+
+    
     
     do
     {
         A.showMenu();
+        // L.impRelVendas();
         cin >> choice;
         choice = toupper(choice);
 
@@ -25,7 +28,8 @@ int main()
         {
         case 'S':
             cout << "Opção Stock\n";
-            A.showMenuStock(L);            break;
+            A.showMenuStock(L);            
+            break;
         case 'V':
             cout << "Opção Vendas\n";
             A.showMenuVendas(L);
@@ -36,6 +40,7 @@ int main()
             break;
         case 'R':
             cout << "Opção Relatorios\n";
+            A.showMenuRelatorioVendas(L);
             break;
         case 'F':
             cout << "Opção Fechar\n";
@@ -50,7 +55,8 @@ int main()
 
 /*
 Para executar o código, utilize os seguintes comandos:
-g++ -o main  Projeto_v2/src/Loja.cpp Projeto_v2/src/Cliente.cpp Projeto_v2/src/Relatorio.cpp Projeto_v2/src/Produto.cpp Projeto_v2/src/Vendas.cpp Projeto_v2/src/Auxiliares.cpp Projeto_v2/main.cpp -I include
+g++ -g -o main  Projeto_v2/src/Loja.cpp Projeto_v2/src/Cliente.cpp Projeto_v2/src/ProdCompra.cpp Projeto_v2/src/Produto.cpp Projeto_v2/src/Vendas.cpp Projeto_v2/src/Auxiliares.cpp Projeto_v2/main.cpp -I include
 ./main
+gdb ./main
 
 */

@@ -32,6 +32,11 @@ public:
 	void showMenuVendas(Loja L);
 	void showMenuNovaVenda(Loja L);
 
+	void showMenuRelatorios(Loja L);
+	void showMenuRelatorioVendas(Loja L);
+	void showMenuRelatorioClientes(Loja L);
+	void showMenuRelatorioProdutos(Loja L);
+
 	
 };
 
