@@ -28,6 +28,7 @@ public:
 	void setNome();
 	void setQuantidade();
 	void setPreco();
+	void atualizaQuantidade(int qtd);
 
 	//outras funcoes
 	string toString();

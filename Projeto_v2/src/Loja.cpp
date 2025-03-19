@@ -1030,6 +1030,38 @@ int* Loja::clienteMaisComprador()
     return maisComprador;
 }
 
+void Loja::finalizarVenda(int talao, string dataHora, float subTotal, string nomeCliente)
+{
+    ListaVendas[contVendas] = Vendas(talao, dataHora, nomeCliente, subTotal);
+    contVendas++;
+    contCarrinho = 0;
+}
+
+void Loja::addProdCompra(int talao)
+{
+    for (int i = 0; i < contCarrinho; i++)
+    {
+        ListaProdCompra[contProdCompra] = ProdCompra(talao, ListaCarrinho[i].getId(), ListaCarrinho[i].getDesc(), ListaCarrinho[i].getQuantidade(), ListaCarrinho[i].getPrecoTotal());
+        atualizarStock(ListaCarrinho[i].getId(), ListaCarrinho[i].getQuantidade());
+    }
+    
+    contProdCompra++;
+}
+void Loja::atualizarStock(int idProd, int quantidadeVendida) {
+    for (int i = 0; i < contProduto; i++) {
+        if (Stock[i].getId() == idProd) {
+            int novaQuantidade = Stock[i].getQuantidade() - quantidadeVendida;
+            if (novaQuantidade < 0) {
+                std::cerr << "Erro: Quantidade insuficiente no stock para o produto ID " << idProd << std::endl;
+                return;
+            }
+            Stock[i].atualizaQuantidade(novaQuantidade);
+            return;
+        }
+    }
+    std::cerr << "Erro: Produto com ID " << idProd << " não encontrado no stock." << std::endl;
+}
+
 //Auxiliares -------------------------------------------------------------------------------
 void Loja::preencherDadosIniciais()
 {

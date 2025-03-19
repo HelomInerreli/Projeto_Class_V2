@@ -54,11 +54,16 @@ public:
 	void imprimirVendas(int* tamanhos);
 	void showMenuNovaVenda();
 	int getLastIdVendas();
+	void addVenda(int talao, string dataVenda, string cliente, float valorTotal);
+	void addProdCompra(int talao);
+	void finalizarVenda(int talao, string dataHora, float subTotal, string nomeCliente);
+
 
 	void mostrarCarrinho();
 	int* tamanhoColunasCarrinho();
 	void addProdCarrinho(int idProd, string descProd, int qtd, float preco);
 	float calcSubTotal();
+	void atualizarStock(int idProd, int quantidadeVendida);
 
 
 //Relatorios

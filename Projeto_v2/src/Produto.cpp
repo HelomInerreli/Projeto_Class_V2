@@ -99,6 +99,11 @@ void Produto::setQuantidade()
 			
 }
 
+void Produto::atualizaQuantidade(int qtd)
+{
+	quantidade = qtd;
+}
+
 void Produto::setPreco()
 {
 	string novoValor;

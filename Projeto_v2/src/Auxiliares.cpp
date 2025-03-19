@@ -452,7 +452,8 @@ void Auxiliares::showMenuAltProd(Loja &L,int id)
         cout << "   N. ALTERAR NOME   " << "Q. ALTERAR QUANTIDADE   " << "C. ALTERAR CUSTO  "<< "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
-        L.mostrarProdutos();
+        // L.mostrarProdutos();
+        L.Stock[linha].imprimirProduto(L.Stock[linha].tamanhoColunas());
         cout << endl;
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
         cout << "======================================================================================\033[0m\n";
@@ -639,8 +640,6 @@ void Auxiliares::showMenuBuscaCliente(Loja &L)
     delete[] vecLinha; // Libera memória alocada antes de sair
 }
 
-
-
 void Auxiliares::showMenuNovaVenda(Loja &L)
 {
     char opcao;
@@ -688,7 +687,7 @@ void Auxiliares::showMenuNovaVenda(Loja &L)
         {
         case 'F':
             cout << "Finalizando venda...\n";
-            //retorno = showMenuFinalizarVenda(matVenda, linhasMatVenda, matProdVendas, linhasMatProdVendas, mCarrinho, linhasCarr, matStock, linhasMatStock, talao, subTotal, dataHora);
+            retorno = showMenuFinalizarVenda(L, talao, dataHora, subTotal);
             if (retorno)
             {
                 break;
@@ -754,18 +753,14 @@ void Auxiliares::showMenuNovaVenda(Loja &L)
     } while (opcao != 'R');
 }
 
-
-bool showMenuFinalizarVenda(Loja L)
+bool Auxiliares::showMenuFinalizarVenda(Loja &L, int talao, string dataHora, float subTotal)
 {
-    // srand(time(NULL));
     int nSorte, step = 0;
     char opcao = 'Z';
-    string cliente, entrada = "";
+    string clienteId, clienteNome = "", entrada = "";
     bool ganhou = false, sair = false, sorteado = false;
     float valorPago = 0.00, troco = 0.00;
 
-    // idVenda = findLastId(matVenda, linhasMatVenda) + 1;
-    // nSorte = rand() % 100 + 1;
     nSorte = talao;
 
     do
@@ -778,13 +773,13 @@ bool showMenuFinalizarVenda(Loja L)
         cout << endl;
         cout << "              C. CANCELAR VENDA   " << "V. VOLTAR ETAPA   " << "R. RETORNAR A VENDA\n";
         cout << "\033[32m======================================================================================\033[0m\n";
-        L.imp
+        L.mostrarCarrinho();
         cout << endl;
         cout << "\033[32m======================================================================================\n";
         cout << "                 Talão: \033[0m" << talao << "  \033[32mData e Hora: \033[0m" << dataHora << " \n";
-        if (cliente.length() > 0)
+        if (!clienteNome.empty())
         {
-            cout << "\033[32mNIF Cliente: \033[0m" << cliente << "                  \033[32mNúmero da Sorte: \033[0m" << addZero(nSorte, 3) << "\n";
+            cout << "\033[32mNome Cliente: \033[0m" << clienteNome << "                  \033[32mNúmero da Sorte: \033[0m" << addZero(nSorte, 3) << "\n";
         }
         cout << "\033[32mTotal a pagar: \033[0m" << arredondar(subTotal) << "€ \n";
         cout << "\033[32mValor pago: \033[0m" << arredondar(valorPago) << "€ \n";
@@ -793,7 +788,7 @@ bool showMenuFinalizarVenda(Loja L)
         opcao = 'Z';
         if (step == 0)
         {
-            cout << "Insira o NIF do cliente ou N para não adicionar NIF: ";
+            cout << "Insira o ID do cliente ou N para não adicionar cliente: ";
         }
         else if (step == 1)
         {
@@ -823,7 +818,6 @@ bool showMenuFinalizarVenda(Loja L)
                 step = 2;
                 goto reexibir;
             }
-            // sair = true;
         }
         if (step == 2)
         {
@@ -849,19 +843,27 @@ bool showMenuFinalizarVenda(Loja L)
         switch (opcao)
         {
         case 'Z':
-            if (step == 0 && entrada.length() == 9)
+            if (step == 0 && entrada != "N")
             {
-                cliente = entrada;
-                step = 1;
+                int linhaCliente = L.buscarCliente("ID", entrada);
+                if (linhaCliente >= 0)
+                {
+                    clienteId = entrada;
+                    clienteNome = L.ListaClientes[linhaCliente].getNome();
+                    step = 1;
+                }
+                else
+                {
+                    cout << "Cliente não encontrado! Insira um ID válido ou N para não adicionar cliente.\n";
+                    sleep(1);
+                }
             }
-            else if (step == 0 && entrada.length() != 9)
+            else if (step == 0 && entrada == "N")
             {
-                cout << "NIF inválido! Insira um NIF válido.\n";
-                sleep(1);
+                step = 1;
             }
             if (step == 2)
             {
-
                 valorPago = stof(entrada);
                 while (valorPago < subTotal && entrada != "C" && entrada != "R" && entrada != "V")
                 {
@@ -894,15 +896,8 @@ bool showMenuFinalizarVenda(Loja L)
         finalizar:
             if (step == 3)
             {
-
-                // Adicionar a matriz de vendas
-                updateStockVenda(matStock, matCarrinho, linhaStock, linhasCarrinho);
-                updateMatProdVendas(matProdVendas, matCarrinho, linhasProdVendas, 5, linhasCarrinho, to_string(talao));
-                aumentarLinhas(matVenda, linhasMatVenda, 4, 1);
-                matVenda[linhasMatVenda - 1][0] = to_string(talao);
-                matVenda[linhasMatVenda - 1][1] = dataHora;
-                matVenda[linhasMatVenda - 1][2] = cliente;
-                matVenda[linhasMatVenda - 1][3] = arredondar(subTotal);
+                L.addProdCompra(talao);
+                L.finalizarVenda(talao, dataHora,subTotal, clienteNome );
                 cout << "      Compra finalizada com sucesso! Obrigado pela preferência e volte sempre\n";
                 sleep(5);
                 return false;
@@ -932,11 +927,10 @@ bool showMenuFinalizarVenda(Loja L)
             cout << "Cancelando venda...\n";
             sleep(1);
             sair = true;
-            // colocar para voltar para menu principal de vendas
             return false;
             break;
         case 'N':
-            cout << "NIF não informado.\n";
+            cout << "Cliente não informado.\n";
             sleep(1);
             step = 2;
             break;
@@ -950,7 +944,8 @@ bool showMenuFinalizarVenda(Loja L)
             cout << "Opção inválida! Tente novamente.\n";
             sleep(2);
         }
-    } while (choice != 'R');
+    } while (!sair);
+    return false;
 }
 
 void Auxiliares::showMenuRelatorioVendas(Loja &L)
@@ -996,6 +991,7 @@ void Auxiliares::showMenuRelatorioVendas(Loja &L)
             cout << "Informe o nome do Produto: ";
             cin.ignore();
             getline(cin, nomeProd);
+            nomeProd = textToUpper(nomeProd);
             relVendas = false;
             relVendasProd = true;
             relStock = false;
@@ -1016,77 +1012,3 @@ void Auxiliares::showMenuRelatorioVendas(Loja &L)
         }
     } while (choice != 'R');
 }
-
-void Auxiliares::showMenuRelatorioClientes(Loja &L)
-{
-    char choice;
-    do
-    {
-        system("clear"); // Limpa o terminal no Windows
-        cout << "\033[32m======================================================================================\n";
-        cout << endl;
-        cout << "                                    RELATÓRIO DE CLIENTES\033[0m\n";
-        cout << endl;
-        cout << "               T. TODOS CLIENTES   " << "C. CLIENTES POR PERÍODO   " << "R. RETORNAR\n";
-        cout << "\033[32m======================================================================================\033[0m\n";
-        cout << endl;
-        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
-        cout << "======================================================================================\033[0m\n";
-        cout << "Escolha uma opção: ";
-        cin >> choice;
-        choice = toupper(choice);
-
-        switch (choice)
-        {
-        case 'T':
-            cout << "Todos os clientes...\n";
-            //showMenuRelatorioTodosClientes(matClientes, linhasMatClientes);
-            break;
-        case 'C':
-            cout << "Clientes por período...\n";
-            //showMenuRelatorioClientesPeriodo(matClientes, linhasMatClientes);
-            break;
-        default:
-            cout << "Opção inválida! Tente novamente.\n";
-        }
-    } while (choice != 'R');
-}
-
-void Auxiliares::showMenuRelatorioProdutos(Loja &L)
-{
-    char choice;
-    do
-    {
-        system("clear"); // Limpa o terminal no Windows
-        cout << "\033[32m======================================================================================\n";
-        cout << endl;
-        cout << "                                    RELATÓRIO DE PRODUTOS\033[0m\n";
-        cout << endl;
-        cout << "               T. TODOS PRODUTOS   " << "C. PRODUTOS POR PERÍODO   " << "R. RETORNAR\n";
-        cout << "\033[32m======================================================================================\033[0m\n";
-        cout << endl;
-        cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
-        cout << "======================================================================================\033[0m\n";
-        cout << "Escolha uma opção: ";
-        cin >> choice;
-        choice = toupper(choice);
-
-        switch (choice)
-        {
-        case 'T':
-            cout << "Todos os produtos...\n";
-            //showMenuRelatorioTodosProdutos(matStock, linhasMatStock);
-            break;
-        case 'C':
-            cout << "Produtos por período...\n";
-            //showMenuRelatorioProdutosPeriodo(matStock, linhasMatStock);
-            break;
-        default:
-            cout << "Opção inválida! Tente novamente.\n";
-        }
-    } while (choice != 'R');
-}
-//     } while (!sair);
-//     return false;
-// }
-

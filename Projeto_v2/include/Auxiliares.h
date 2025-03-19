@@ -34,11 +34,12 @@ public:
 
 
 	void showMenuNovaVenda(Loja &L);
+	bool showMenuFinalizarVenda(Loja &L, int talao, string dataHora, float subTotal);
 
-	void showMenuRelatorios(Loja &L);
+	// void showMenuRelatorios(Loja &L);
 	void showMenuRelatorioVendas(Loja &L);
-	void showMenuRelatorioClientes(Loja &L);
-	void showMenuRelatorioProdutos(Loja &L);
+	// void showMenuRelatorioClientes(Loja &L);
+	// void showMenuRelatorioProdutos(Loja &L);
 
 	
 };
