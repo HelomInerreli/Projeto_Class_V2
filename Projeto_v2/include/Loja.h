@@ -45,6 +45,11 @@ public:
 	void alteraProduto();
 	int getLastId();
 //Vendas
+	void mostrarVendas();
+	int* tamanhoColunasVendas();
+	void imprimirVendas(int* tamanhos);
+	void showMenuNovaVenda();
+	int getLastIdVendas();
 
 //Relatorios
 	int* tamanhoColunasImpProdCompras();

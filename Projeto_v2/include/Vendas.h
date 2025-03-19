@@ -18,6 +18,7 @@ public:
 	Vendas(int talao, string dataVenda, string cliente, float valorTotal);
     void imprimirVendas(int* tamanho);
     int* tamanhoColunas();
+    int getTalao();
 
     
 
@@ -38,4 +39,11 @@ public:
     Carrinho(int idProd, string descProd, int qtd, float preco, float precoIva, float precoTotal);
     void imprimirCarrinho(int* tamanho);
     int* tamanhoColunas();
+    //seletores
+	int getId();
+	string getDesc();
+	int getQuantidade();
+	float getPreco();
+    float getPrecoIva();
+    float getPrecoTotal();
 };
