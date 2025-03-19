@@ -10,8 +10,8 @@ class Auxiliares
 private:
 
 public:
-Carrinho listaCarrinho[50];
-int contCarrinho = 0;
+// Carrinho listaCarrinho[50];
+// int contCarrinho = 0;
 	float calcSubTotal();
 	string textToUpper(string text);
 	string addZero(int num, int digitos);
@@ -22,23 +22,23 @@ int contCarrinho = 0;
 
 	// Funcoes para menus
 	void showMenu();
-	void showMenuClientes(Loja L2);
-	void showMenuAltCliente(int id, Loja L2);
-	void showMenuAddCliente(Loja L);
-	void showMenuBuscaCliente(Loja L);
+	void showMenuClientes(Loja &L2);
+	void showMenuAltCliente(int id, Loja &L2);
+	void showMenuAddCliente(Loja &L);
+	void showMenuBuscaCliente(Loja &L);
 
 
-	void showMenuStock(Loja L);
-	void showMenuAddProdutos(Loja L);
-	void showMenuAltProd(Loja L, int id);
+	void showMenuStock(Loja &L);
+	void showMenuAddProdutos(Loja &L);
+	void showMenuAltProd(Loja &L, int id);
 
 
-	void showMenuNovaVenda(Loja L);
+	void showMenuNovaVenda(Loja &L);
 
-	void showMenuRelatorios(Loja L);
-	void showMenuRelatorioVendas(Loja L);
-	void showMenuRelatorioClientes(Loja L);
-	void showMenuRelatorioProdutos(Loja L);
+	void showMenuRelatorios(Loja &L);
+	void showMenuRelatorioVendas(Loja &L);
+	void showMenuRelatorioClientes(Loja &L);
+	void showMenuRelatorioProdutos(Loja &L);
 
 	
 };

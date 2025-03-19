@@ -90,12 +90,13 @@ void Carrinho::imprimirCarrinho(int* tamanhos)
 	{
 		cout << " ";
 	}
-	cout << " |";
+	cout << " | " << precoIva;
     for (int i = 0; i <= tamanhos[4] - to_string(precoIva).length()+3; i++)
 	{
 		cout << " ";
 	}
-	cout << " |";
+	
+	cout << " | " << precoTotal;
     for (int i = 0; i <= tamanhos[5] - to_string(precoTotal).length()+3; i++)
 	{
 		cout << " ";
@@ -106,12 +107,13 @@ void Carrinho::imprimirCarrinho(int* tamanhos)
 }
 int* Carrinho::tamanhoColunas()
 {
-	int* tamanhos = new int[4];
-	tamanhos[0] = descProd.length();
-	tamanhos[1] = to_string(qtd).length();
-	tamanhos[2] = to_string(preco).length();
-	tamanhos[3] = to_string(precoIva).length();
-    tamanhos[4] = to_string(precoTotal).length();
+	int* tamanhos = new int[6];
+	tamanhos[0] = to_string(idProd).length();
+	tamanhos[1] = descProd.length();
+	tamanhos[2] = to_string(qtd).length();
+	tamanhos[3] = to_string(preco).length();
+	tamanhos[4] = to_string(precoIva).length();
+    tamanhos[5] = to_string(precoTotal).length();
 	
 	return tamanhos;
 }

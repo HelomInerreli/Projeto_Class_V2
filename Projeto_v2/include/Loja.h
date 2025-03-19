@@ -23,6 +23,9 @@ public:
 	int contProdCompra = 0;
 	ProdCompra ListaProdCompra[100];
 
+	int contCarrinho =0;
+	Carrinho ListaCarrinho[100];
+
 	Loja();
 	Loja(Loja &L);
 //Cliente
@@ -51,6 +54,12 @@ public:
 	void imprimirVendas(int* tamanhos);
 	void showMenuNovaVenda();
 	int getLastIdVendas();
+
+	void mostrarCarrinho();
+	int* tamanhoColunasCarrinho();
+	void addProdCarrinho(int idProd, string descProd, int qtd, float preco);
+	float calcSubTotal();
+
 
 //Relatorios
 	int* tamanhoColunasImpProdCompras();

@@ -35,6 +35,11 @@ Loja::Loja(Loja &L)
     {
         ListaVendas[i]=L.ListaVendas[i];
     }
+    contCarrinho = L.contCarrinho;
+    for (int i = 0; i < contCarrinho; i++)
+    {
+        ListaCarrinho[i]=L.ListaCarrinho[i];
+    }
 }
 }
 
@@ -593,6 +598,118 @@ int Loja::getLastIdVendas()
     }
     return maiorId;
 }
+int* Loja::tamanhoColunasCarrinho()
+{
+    int* tamanhos = new int[6];
+    tamanhos[0] = 0;
+    tamanhos[1] = 0;
+    tamanhos[2] = 0;
+    tamanhos[3] = 0;
+    tamanhos[4] = 0;
+    tamanhos[5] = 0;
+
+
+    for (int i = 0; i < contCarrinho; i++)
+    {
+        int* tamanhosCarrinho= ListaCarrinho[i].tamanhoColunas();
+        for (int j = 0; j < 6; j++)
+        {
+            if (tamanhosCarrinho[j] > tamanhos[j])
+            {
+                tamanhos[j] = tamanhosCarrinho[j];
+            }
+        }
+    }
+
+    return tamanhos;
+}
+void Loja::mostrarCarrinho()
+{
+    int* tamanhos = tamanhoColunasCarrinho();
+    tamanhos[0] = (tamanhos[0] < 2) ? 2 : tamanhos[0];
+    tamanhos[1] = (tamanhos[1] < 9) ? 9 : tamanhos[1];
+    tamanhos[2] = (tamanhos[2] < 3) ? 2 : tamanhos[2];
+    tamanhos[3] = (tamanhos[3] < 5) ? 5 : tamanhos[3];
+    tamanhos[4] = (tamanhos[4] < 5) ? 5 : tamanhos[4];
+    tamanhos[5] = (tamanhos[4] < 11) ? 11 : tamanhos[5];
+    // cout << tamanhos[0] << tamanhos[1] << tamanhos[2] << tamanhos[3] << tamanhos[4] << tamanhos[5];
+    int tLinhas = tamanhos[0] + tamanhos[1] + tamanhos[2] + tamanhos[3] + tamanhos[4] + tamanhos[5] + 25;
+    string txtTitulo = "=== CARRINHO ===";
+    int tTitulo = (tLinhas - txtTitulo.length()) / 2;
+    string linha = "";
+    for (int i = 0; i < tLinhas; i++)
+    {
+        linha += "-";
+    }
+    string linhaDupla = "";
+    for (int i = 0; i < tTitulo; i++)
+    {
+        linhaDupla += "=";
+    }
+    string cabecalho = "| ID";
+    for (int i = 0; i < tamanhos[0] - 2; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | DESCRICAO ";
+    for (int i = 0; i < tamanhos[1] - 9; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | QTD ";
+    for (int i = 0; i < tamanhos[2] - 3; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | PRECO ";
+    for (int i = 0; i < tamanhos[3] - 5; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | + IVA ";
+    for (int i = 0; i < tamanhos[4] - 5; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += " | PRECO TOTAL ";
+    for (int i = 0; i < tamanhos[5] - 11; i++)
+    {
+        cabecalho += " ";
+    }
+    cabecalho += "|";
+
+    cout << endl;
+    cout << linha << "\n";
+    cout << linhaDupla << txtTitulo << linhaDupla << "\n";
+    cout << linha << "\n";
+    cout << cabecalho << "\n";
+    cout << linha << "\n";
+
+    for (int i = 0; i < contCarrinho; i++)
+    {
+        ListaCarrinho[i].imprimirCarrinho(tamanhos);
+    }
+    cout << linha << "\n";
+    cout << endl;
+}
+void Loja::addProdCarrinho(int idProd, string descProd, int qtd, float preco)
+{
+    float pIva, pTotal;
+    pIva = stof(auxL.arredondar(preco * 1.30));
+    pTotal = stof(auxL.arredondar(pIva * qtd));
+    ListaCarrinho[contCarrinho]=Carrinho(idProd, descProd, qtd, preco, pIva, pTotal);
+    contCarrinho++;
+}
+float Loja::calcSubTotal()
+{   
+    float subTotal = 0 ;
+    for (int i = 0; i < contCarrinho; i++)
+    {
+       subTotal= ListaCarrinho[i].getPrecoTotal() +subTotal;
+    }
+    return subTotal;
+}
+
 //Relatorios -------------------------------------------------------------------------------
 
 int* Loja::tamanhoColunasImpProdCompras()
@@ -952,4 +1069,8 @@ void Loja::preencherDadosIniciais()
     ListaProdCompra[8] = ProdCompra(3, 4, "BATATA", 25, 40.5);
     ListaProdCompra[9] = ProdCompra(3, 5, "CARNE", 30, 50.5);
     contProdCompra = 10;
+
+    // ListaCarrinho[0] = Carrinho(1, "ARROZ", 2, 1.25, 1.62, 3.25);
+    // ListaCarrinho[1] = Carrinho(2, "MASSA", 3, 1.25, 2.01, 4.02);
+    // contCarrinho = 2;
 }

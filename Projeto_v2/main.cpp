@@ -20,7 +20,6 @@ int main()
     do
     {
         A.showMenu();
-        // L.impRelVendas();
         cin >> choice;
         choice = toupper(choice);
 
