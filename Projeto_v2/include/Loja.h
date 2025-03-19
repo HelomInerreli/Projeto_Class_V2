@@ -49,7 +49,7 @@ public:
 //Relatorios
 	int* tamanhoColunasImpProdCompras();
 	void impRelVendasProd(string nomeProd);
-	void impRelVendas(int id);
+	void impRelVendas();
 	int* prodMaisVendido();
 	int* prodMenosVendido();
 	int* prodMaisLucrativo();

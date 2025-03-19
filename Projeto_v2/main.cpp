@@ -20,7 +20,7 @@ int main()
     do
     {
         A.showMenu();
-        L.impRelVendas(1);
+        // L.impRelVendas();
         cin >> choice;
         choice = toupper(choice);
 
@@ -56,6 +56,7 @@ int main()
 /*
 Para executar o código, utilize os seguintes comandos:
 g++ -g -o main  Projeto_v2/src/Loja.cpp Projeto_v2/src/Cliente.cpp Projeto_v2/src/ProdCompra.cpp Projeto_v2/src/Produto.cpp Projeto_v2/src/Vendas.cpp Projeto_v2/src/Auxiliares.cpp Projeto_v2/main.cpp -I include
+./main
 gdb ./main
 
 */

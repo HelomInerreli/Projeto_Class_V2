@@ -135,7 +135,7 @@ void Auxiliares::showMenu()
     cout << endl;
     cout << "                                   MENU PRINCIPAL\033[0m\n";
     cout << endl;
-    cout << "    S. STOCK   " << "V. VENDAS   " << "C. CLIENTES   " << "R. RELATORIOS   "  << "F. FECHAR\n";
+    cout << "        S. STOCK   " << "V. VENDAS   " << "C. CLIENTES   " << "R. RELATÓRIOS   "  << "F. FECHAR\n";
     cout << "\033[32m======================================================================================\n";
     cout << "                          Data e Hora: " << getDateTime() << "\n";
     cout << "======================================================================================\033[0m\n";
@@ -680,7 +680,7 @@ void Auxiliares::showMenuRelatorioVendas(Loja L)
     string nomeProd;
     bool relVendas = false;
     bool relVendasProd = false;
-    int codRel;
+    bool relStock = false;
 
     do
     {
@@ -689,19 +689,20 @@ void Auxiliares::showMenuRelatorioVendas(Loja L)
         cout << endl;
         cout << "                                    RELATÓRIO DE VENDAS\033[0m\n";
         cout << endl;
-        cout << "     P. POR PRODUTO    " << "M. MAIS VENDIDOS    " << "V. MENOS VENDIDOS    "  << "R. RETORNAR\n";
-        cout << "                     L. LUCRO PRODUTOS MAIS VENDIDOS  " << "C. CLIENTES QUE MAIS COMPROU \n";
+        cout << "     P. REL. POR PRODUTO    " << "G. REL. GERAL DE VENDAS    " << "S. REL. STOCK    " << "R. RETORNAR\n";
         cout << "\033[32m======================================================================================\033[0m\n";
         cout << endl;
-        cout << "Desc Prod: " << L.ListaProdCompra[0].getDescProd() << endl;
         if (relVendas)
         {
-            L.impRelVendas(codRel);
+            L.impRelVendas();
         }
         if (relVendasProd)
         {
-            cout << "Relatório de vendas do produto: " << nomeProd << "\n";
             L.impRelVendasProd(nomeProd);
+        }
+        if (relStock)
+        {
+            L.mostrarProdutos();
         }
         cout << endl;
         cout << "                          \033[32mData e Hora: " << getDateTime() << "\n";
@@ -718,28 +719,19 @@ void Auxiliares::showMenuRelatorioVendas(Loja L)
             getline(cin, nomeProd);
             relVendas = false;
             relVendasProd = true;
+            relStock = false;
             break;
-        case 'M':
-            codRel = 1;
+        case 'G':
             relVendas = true;
             relVendasProd = false;
+            relStock = false;
             break;
-        case 'V':
-            codRel = 2;
-            relVendas = true;
+        case 'S':
+            relVendas = false;
             relVendasProd = false;
+            relStock = true;
             break;
-        case 'L':
-            codRel = 3;
-            relVendas = true;
-            relVendasProd = false;
-            break;
-        case 'C':
-            codRel = 4;
-            relVendas = true;
-            relVendasProd = false;
-            break;
-        
+
         default:
             cout << "Opção inválida! Tente novamente.\n";
         }
