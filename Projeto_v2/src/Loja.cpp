@@ -383,7 +383,7 @@ void Loja::mostrarProdutos()
         cabecalho += " ";
     }
     cabecalho += " | PRECO ";
-    for (int i = 0; i < tamanhos[3] - 6; i++)
+    for (int i = 0; i < tamanhos[3] - 5; i++)
     {
         cabecalho += " ";
     }
@@ -590,37 +590,39 @@ int Loja::getLastIdVendas()
 void Loja::preencherDadosIniciais()
 {
     //Clientes
-    ListaClientes[0] = Cliente(10, "Joao", "123456789", "Rua 1");
-    ListaClientes[1] = Cliente(23, "Maria", "987654321", "Rua 2");
-    ListaClientes[2] = Cliente(03, "Jose", "123456789", "Rua 3");
-    ListaClientes[3] = Cliente(04, "Ana", "987654321", "Rua 4");
-    ListaClientes[4] = Cliente(05, "Pedro", "123456789", "Rua 522222222");
+    ListaClientes[0] = Cliente(10, "Joao", "123456789", "Rua das Esquinas");
+    ListaClientes[1] = Cliente(23, "Maria", "987654321", "Rua das Tolinhas");
+    ListaClientes[2] = Cliente(03, "Jose", "123456789", "Rua dos Agrafados");
+    ListaClientes[3] = Cliente(04, "Ana", "987654321", "Rua dos Maltrapilhas");
+    ListaClientes[4] = Cliente(05, "Pedro", "123456789", "Rua dos Malandros");
     contCliente = 5;
 
     //Produtos
-    Stock[0] = Produto(1, "Produto 1", 10, 10.5);
-    Stock[1] = Produto(2, "Produto 2", 20, 20.5);
-    Stock[2] = Produto(3, "Produto 3", 30, 30.5);
-    Stock[3] = Produto(4, "Produto 4", 40, 40.5);
-    Stock[4] = Produto(5, "Produto 5", 50, 50.5);
+    Stock[0] = Produto(1, "MASSA", 12, 1.55);
+    Stock[1] = Produto(2, "ARROZ", 17, 1.25);
+    Stock[2] = Produto(3, "FEIJAO", 22, 1.13);
+    Stock[3] = Produto(4, "BATATA", 19, 2.55);
+    Stock[4] = Produto(5, "CARNE", 11, 5.58);
     contProduto = 5;
 
     //Vendas
-    ListaVendas[0] = Vendas(1, "01/01/2021", "Joao", 100.5);
-    ListaVendas[1] = Vendas(2, "02/01/2021", "Maria", 50.5);
-    ListaVendas[2] = Vendas(3, "03/01/2021", "Jose", 62.0);
-    contVendas = 3;
+    ListaVendas[0] = Vendas(1, "03/05/2021", "Joao", 100.5);
+    ListaVendas[1] = Vendas(2, "20/01/2022", "Maria", 50.5);
+    ListaVendas[2] = Vendas(3, "15/03/2023", "Jose", 62.0);
+    ListaVendas[3] = Vendas(4, "04/09/2023", "Eva", 55.0);
+    ListaVendas[4] = Vendas(5, "02/05/2024", "Zeca Afonso", 99.45);
+    contVendas = 4;
 
     //ProdCompra
-    ListaProdCompra[0] = ProdCompra(1, 1, "Produto 1", 10, 10.5);
-    ListaProdCompra[1] = ProdCompra(1, 2, "Produto 2", 20, 20.5);
-    ListaProdCompra[2] = ProdCompra(1, 3, "Produto 3", 30, 30.5);
-    ListaProdCompra[3] = ProdCompra(2, 5, "Produto 5", 50, 50.5);
-    ListaProdCompra[4] = ProdCompra(2, 4, "Produto 4", 40, 40.5);
-    ListaProdCompra[5] = ProdCompra(2, 3, "Produto 3", 15, 30.5);
-    ListaProdCompra[6] = ProdCompra(2, 2, "Produto 2", 10, 20.5);
-    ListaProdCompra[7] = ProdCompra(3, 1, "Produto 1", 5, 10.5);
-    ListaProdCompra[8] = ProdCompra(3, 4, "Produto 4", 25, 40.5);
-    ListaProdCompra[9] = ProdCompra(3, 5, "Produto 5", 30, 50.5);
+    ListaProdCompra[0] = ProdCompra(1, 1, "MASSA", 10, 10.5);
+    ListaProdCompra[1] = ProdCompra(1, 2, "ARROZ", 20, 20.5);
+    ListaProdCompra[2] = ProdCompra(1, 3, "FEIJAO", 30, 30.5);
+    ListaProdCompra[3] = ProdCompra(2, 5, "CARNE", 50, 50.5);
+    ListaProdCompra[4] = ProdCompra(2, 4, "BATATA", 40, 40.5);
+    ListaProdCompra[5] = ProdCompra(2, 3, "FEIJAO", 15, 30.5);
+    ListaProdCompra[6] = ProdCompra(2, 2, "ARROZ", 10, 20.5);
+    ListaProdCompra[7] = ProdCompra(3, 1, "MASSA", 5, 10.5);
+    ListaProdCompra[8] = ProdCompra(3, 4, "BATATA", 25, 40.5);
+    ListaProdCompra[9] = ProdCompra(3, 5, "CARNE", 30, 50.5);
     contProdCompra = 10;
 }
